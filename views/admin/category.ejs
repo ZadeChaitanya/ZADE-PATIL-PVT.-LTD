@@ -1,4 +1,4 @@
-<%-include("navbar.ejs")%>
+<%- include("admin/navbar") %>
      <div class="container-fluid">
           <div class="row p-0">
                <div class="col-12">
@@ -47,9 +47,4 @@
                <% }) %>
           </div>
      </div>
-     <%-include("footer.ejs")%>
-<!-- 
-CREATE TABLE category (
-     id INT PRIMARY KEY AUTO_INCREMENT,
-     category VARCHAR(100)
-); -->
+     <%- include("admin/footer") %>
