@@ -151,7 +151,7 @@ route.post('/add_slider', verify_admin, async function (req, res) {
   res.redirect('/admin/add_slider')
 })
 route.get('/view_slider', verify_admin, async function (req, res) {
-  var data = await exe('SELECT * FROM SLIDER')
+  var data = await exe('SELECT * FROM slider')
   var obj = { slider: data }
   res.render('admin/view_slider.ejs', obj)
 })
