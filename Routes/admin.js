@@ -13,7 +13,7 @@ route.get('/', function (req, res) {
 // route.post('/create_account', async function (req, res) {
 //   var d = req.body
 //   var FileName = Date.now() + req.files.admin_photo.name
-//   req.files.admin_photo.mv('Public/admin/images/' + FileName)
+//   req.files.admin_photo.mv('public/admin/images/' + FileName)
 //   var sql = `INSERT INTO admin (admin_name,admin_mobile,admin_email,admin_gender,admin_dob,admin_photo,admin_address,admin_password) VALUES ('${d.admin_name}','${d.admin_mobile}','${d.admin_email}','${d.admin_gender}','${d.admin_dob}','${FileName}','${d.admin_address}','${d.admin_password}')`
 //   var data = await exe(sql)
 //   res.redirect('/admin/')
@@ -114,13 +114,13 @@ route.post('/about_us', verify_admin, async function (req, res) {
   if (req.files) {
     if (req.files.background_image) {
       var FileName = Date.now() + req.files.background_image.name
-      req.files.background_image.mv('Public/admin/images/' + FileName)
+      req.files.background_image.mv('public/admin/images/' + FileName)
       var sql = `UPDATE about_us SET background_image = '${FileName}'`
       var data = await exe(sql)
     }
     if (req.files.side_image) {
       var FileName = Date.now() + req.files.side_image.name
-      req.files.side_image.mv('Public/admin/images/' + FileName)
+      req.files.side_image.mv('public/admin/images/' + FileName)
       var sql = `UPDATE about_us SET side_image = '${FileName}'`
       var data = await exe(sql)
     }
@@ -144,7 +144,7 @@ route.get('/add_slider', verify_admin, function (req, res) {
 route.post('/add_slider', verify_admin, async function (req, res) {
   var d = req.body
   var FileName = Date.now() + req.files.slider_image.name
-  req.files.slider_image.mv('Public/admin/images/' + FileName)
+  req.files.slider_image.mv('public/admin/images/' + FileName)
 
   var sql = `INSERT INTO slider (slider_heading,slider_info,slider_image,button_text,button_url) VALUES ('${d.slider_heading}','${d.slider_info}','${FileName}','${d.button_text}','${d.button_url}') `
   var data = await exe(sql)
@@ -171,7 +171,7 @@ route.post('/update_slider', verify_admin, async function (req, res) {
   var d = req.body
   if (req.files) {
     var FileNewName = Date.now() + req.files.slider_image.name
-    req.files.slider_image.mv('Public/admin/images/' + FileNewName)
+    req.files.slider_image.mv('public/admin/images/' + FileNewName)
     var sql = `UPDATE slider SET slider_image = '${FileNewName}' WHERE id = '${d.id}' ;`
     var data = await exe(sql)
     // res.send(sql);
@@ -308,25 +308,25 @@ route.post('/update_product', verify_admin, async function (req, res) {
   var d = req.body
   if (req.files && req.files.product_image1) {
     var product_image1 = Date.now() + req.files.product_image1.name
-    req.files.product_image1.mv('Public/uploads/' + product_image1)
+    req.files.product_image1.mv('public/uploads/' + product_image1)
     var sql = `UPDATE product SET product_image1='${product_image1}' WHERE id = '${d.id}' `
     var data = await exe(sql)
   }
   if (req.files && req.files.product_image2) {
     var product_image2 = Date.now() + req.files.product_image2.name
-    req.files.product_image2.mv('Public/uploads/' + product_image2)
+    req.files.product_image2.mv('public/uploads/' + product_image2)
     var sql = `UPDATE product SET product_image2='${product_image2}' WHERE id = '${d.id}' `
     var data = await exe(sql)
   }
   if (req.files && req.files.product_image3) {
     var product_image3 = Date.now() + req.files.product_image3.name
-    req.files.product_image3.mv('Public/uploads/' + product_image3)
+    req.files.product_image3.mv('public/uploads/' + product_image3)
     var sql = `UPDATE product SET product_image3='${product_image3}' WHERE id = '${d.id}' `
     var data = await exe(sql)
   }
   if (req.files && req.files.product_image4) {
     var product_image4 = Date.now() + req.files.product_image4.name
-    req.files.product_image4.mv('Public/uploads/' + product_image4)
+    req.files.product_image4.mv('public/uploads/' + product_image4)
     var sql = `UPDATE product SET product_image4='${product_image4}' WHERE id = '${d.id}' `
     var data = await exe(sql)
   }
