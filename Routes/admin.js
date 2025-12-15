@@ -146,7 +146,7 @@ route.post('/add_slider', verify_admin, async function (req, res) {
   var FileName = Date.now() + req.files.slider_image.name
   req.files.slider_image.mv('Public/admin/images/' + FileName)
 
-  var sql = `INSERT INTO SLIDER (slider_heading,slider_info,slider_image,button_text,button_url) VALUES ('${d.slider_heading}','${d.slider_info}','${FileName}','${d.button_text}','${d.button_url}') `
+  var sql = `INSERT INTO slider (slider_heading,slider_info,slider_image,button_text,button_url) VALUES ('${d.slider_heading}','${d.slider_info}','${FileName}','${d.button_text}','${d.button_url}') `
   var data = await exe(sql)
   res.redirect('/admin/add_slider')
 })
@@ -157,13 +157,13 @@ route.get('/view_slider', verify_admin, async function (req, res) {
 })
 route.get('/delete_slider/:id', verify_admin, async function (req, res) {
   var id = req.params.id
-  var sql = `DELETE FROM SLIDER WHERE id = '${id}'`
+  var sql = `DELETE FROM slider WHERE id = '${id}'`
   var data = await exe(sql)
   res.redirect('/admin/view_slider')
 })
 route.get('/edit_slider/:id', verify_admin, async function (req, res) {
   var id = req.params.id
-  var data = await exe(`SELECT * FROM SLIDER WHERE id ='${id}' `)
+  var data = await exe(`SELECT * FROM slider WHERE id ='${id}' `)
   var obj = { slider: data }
   res.render('admin/edit_slider.ejs', obj)
 })
@@ -172,11 +172,11 @@ route.post('/update_slider', verify_admin, async function (req, res) {
   if (req.files) {
     var FileNewName = Date.now() + req.files.slider_image.name
     req.files.slider_image.mv('Public/admin/images/' + FileNewName)
-    var sql = `UPDATE SLIDER SET slider_image = '${FileNewName}' WHERE id = '${d.id}' ;`
+    var sql = `UPDATE slider SET slider_image = '${FileNewName}' WHERE id = '${d.id}' ;`
     var data = await exe(sql)
     // res.send(sql);
   }
-  var sql = `UPDATE SLIDER SET 
+  var sql = `UPDATE slider SET 
      slider_heading = '${d.slider_heading}' ,
       slider_info = '${d.slider_info}' ,
       button_text = '${d.button_text}', 
@@ -198,12 +198,12 @@ route.post('/category', verify_admin, async function (req, res) {
 })
 route.get('/edit_category/:id', verify_admin, async function (req, res) {
   var id = req.params.id
-  var data = await exe(`SELECT * FROM CATEGORY WHERE id = '${id}'`)
+  var data = await exe(`SELECT * FROM category WHERE id = '${id}'`)
   res.render('admin/update_category.ejs', { data })
 })
 route.get('/delete_category/:id', verify_admin, async function (req, res) {
   var id = req.params.id
-  var data = await exe(`DELETE  FROM CATEGORY WHERE id = '${id}'`)
+  var data = await exe(`DELETE  FROM category WHERE id = '${id}'`)
   res.redirect('/admin/category')
 })
 route.post('/update_category', verify_admin, async function (req, res) {
