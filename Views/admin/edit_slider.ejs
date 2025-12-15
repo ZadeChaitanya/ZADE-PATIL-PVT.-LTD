@@ -1,0 +1,58 @@
+<%- include("navbar.ejs") %>
+
+<!-- <style></style> -->
+
+
+<div class="container my-4">
+
+     <h1 class="bg-light p-3 page-title">Update Slider</h1>
+
+     <div class="row justify-content-center mt-3">
+
+          <div class="col-md-6">
+
+               <div class="form-wrapper">
+
+                    <!-- Correct update route -->
+                    <form action="/admin/update_slider" method="post" enctype="multipart/form-data">
+                         <input type="hidden" name="id" value="<%= slider[0].id %>" id="">
+
+                         <label class="form-label">Slider Heading</label>
+                         <input type="text" name="slider_heading" class="form-control mb-3"
+                                value="<%= slider[0].slider_heading %>" required>
+
+                         <label class="form-label">Slider Info</label>
+                         <textarea name="slider_info" class="form-control mb-3" required><%= slider[0].slider_info %></textarea>
+
+                         <label class="form-label d-block">Current Image</label>
+                         <img src="/admin/images/<%= slider[0].slider_image %>" class="current-image">
+
+                         <label class="form-label">Upload New Image (optional)</label>
+                         <input type="file" name="slider_image" accept="image/*" class="form-control mb-4">
+
+                         <label class="form-label">button text </label>
+                         <input type="text" name="button_text" class="form-control mb-3" value="<%= slider[0].button_text %>" required>
+                         
+                         <label class="form-label"> button link / url </label>
+                         <input type="text" name="button_url" class="form-control mb-3" value="<%= slider[0].button_url %>" required>
+
+                         <div class="text-center">
+                              <button class="btn btn-success btn-update">Update Slider</button>
+                         </div>
+
+
+                    </form>
+
+               </div>
+
+          </div>
+          <div class="text-center">
+               <a href="/admin/view_slider">
+                    <button class="btn-back"> ↢ &nbsp; Back</button>
+               </a>
+          </div>
+     </div>
+
+</div>
+
+<%- include("footer.ejs") %>

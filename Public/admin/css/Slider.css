@@ -1,0 +1,166 @@
+
+ /*    slider main  */
+.header-title {
+          font-size: 26px;
+          font-weight: 600;
+     }
+
+     .manage-box {
+          background: #fff;
+          border-radius: 8px;
+          padding: 30px;
+          text-align: center;
+          box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+          transition: .3s;
+     }
+
+     .manage-box:hover {
+          transform: translateY(-3px);
+          box-shadow: 0 5px 15px rgba(0,0,0,0.12);
+     }
+
+     .manage-btn {
+          padding: 10px 25px;
+          margin-top: 15px;
+          font-size: 15px;
+          font-weight: 600;
+          border-radius: 6px;
+     }
+
+     /*  add slider  */
+
+        .page-title {
+          font-size: 26px;
+          font-weight: 600;
+     }
+
+     .form-wrapper {
+          background: #fff;
+          border-radius: 8px;
+          padding: 30px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
+     }
+
+     .form-label {
+          font-weight: 600;
+          margin-bottom: 5px;
+     }
+
+     .form-control, textarea {
+          border-radius: 6px;
+          padding: 10px;
+          font-size: 15px;
+     }
+
+     textarea {
+          height: 120px;
+          resize: none;
+     }
+
+     .btn-submit {
+          padding: 10px 30px;
+          font-size: 16px;
+          font-weight: 600;
+          border-radius: 6px;
+     }
+
+     /* VIEW SLIDEr */
+
+         .page-title {
+          font-size: 28px;
+          font-weight: 700;
+          text-align: center;
+          margin-bottom: 25px;
+     }
+
+     .slider-card {
+          border-radius: 10px;
+          overflow: hidden;
+          background: #fff;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+          transition: .3s;
+     }
+     .slider-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 6px 15px rgba(0,0,0,0.18);
+     }
+
+     .slider-card img {
+          width: 100%;
+          height: 250px;
+          object-fit: cover;
+     }
+
+     .slider-card h3 {
+          font-size: 20px;
+          font-weight: 600;
+          margin-bottom: 8px;
+     }
+
+     .btn-edit {
+          background:#0d6efd;
+          color:#fff;
+          font-weight:600;
+          padding:8px 18px;
+          border-radius:6px;
+     }
+     .btn-edit:hover {
+          background:#0b5ed7;
+     }
+
+     .btn-delete {
+          background:#dc3545;
+          color:#fff;
+          font-weight:600;
+          padding:8px 18px;
+          border-radius:6px;
+     }
+     .btn-delete:hover {
+          background:#bb2d3b;
+     }
+
+     .action-box{
+          gap:10px;
+     }
+
+     p{margin-bottom:0;}
+
+     /* EDIT SLIDER  */
+     .page-title {
+          font-size: 26px;
+          font-weight: 600;
+     }
+     .form-wrapper {
+          background: #fff;
+          border-radius: 8px;
+          padding: 30px;
+          box-shadow: 0 4px 12px rgba(0,0,0,0.10);
+     }
+     .form-label {
+          font-weight: 600;
+     }
+     .current-image {
+          width: 100%;
+          height: 250px;
+          object-fit: cover;
+          border-radius: 6px;
+          margin-bottom: 15px;
+     }
+     .btn-update {
+          padding: 10px 32px;
+          border-radius: 6px;
+          font-weight: 600;
+          font-size: 16px;
+     }
+     .btn-back{
+           padding: 8px 25px;
+          font-size: 15px;
+          border-radius: 6px;
+          font-weight: 600;
+          background:#4d5358;
+          color:#fff;
+          margin-top:20px;
+     }
+     .btn-back:hover{
+          background:#5e666c;
+     }

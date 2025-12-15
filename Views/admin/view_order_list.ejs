@@ -1,0 +1,150 @@
+<%- include("navbar.ejs") %>
+
+<style>
+     body {
+          background: #f5f5f5;
+     }
+
+     .page-title {
+          font-size: 1.8rem;
+          font-weight: 700;
+          margin: 20px 0;
+     }
+
+     .order-table {
+          background: #fff;
+          border-radius: 10px;
+          padding: 20px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+     }
+
+     table thead {
+          background: #f1f1f1;
+     }
+
+     table th {
+          font-weight: 600;
+          padding: 12px;
+          color: #333;
+     }
+
+     table td {
+          vertical-align: middle;
+          padding: 12px;
+     }
+
+     .btn-details {
+          background: #2874f0;
+          color: white;
+          font-weight: 600;
+          border-radius: 6px;
+     }
+
+     .btn-details:hover {
+          background: #1f5fc4;
+          color: #fff;
+     }
+
+     .status-badge {
+          padding: 4px 10px;
+          border-radius: 15px;
+          font-size: 0.8rem;
+          font-weight: 600;
+     }
+
+     .badge-pending { background: #ffe7b3; color: #8a6000; }
+     .badge-dispatched { background: #d9f1ff; color: #004d73; }
+     .badge-delivered { background: #d4ffd9; color: #057a00; }
+     .badge-cancelled { background: #ffd6d6; color: #8a0000; }
+     .badge-returned { background: #ffe680; color: #806600; }
+</style>
+
+
+<div class="container my-4">
+
+     <!-- PAGE TITLE -->
+     <h2 class="page-title"><%= status.charAt(0).toUpperCase() + status.slice(1) %> Orders</h2>
+
+     <div class="order-table">
+
+          <table class="table table-bordered table-hover">
+               <thead>
+                    <tr>
+                         <th>#</th>
+                         <th>Action</th>
+                         <th>Customer</th>
+                         <th>Mobile</th>
+                         <th>Address</th>
+                         <th>Order Date</th>
+                         <th>Total Amount</th>
+                         <th>Status</th>
+                    </tr>
+               </thead>
+
+               <tbody>
+                    <% orders.forEach((val,i)=>{ %>
+
+                         <tr>
+                              <td><b><%= i+1 %></b></td>
+
+                              <td>
+                                   <a href="/admin/view_order_detail/<%= val.order_id %>/<%= val.order_status %>" 
+                                      class="btn btn-details px-3 py-1">
+                                        View
+                                   </a>
+                              </td>
+
+                              <td><%= val.customer_name %></td>
+
+                              <td><%= val.customer_mobile %></td>
+
+                              <td>
+                                   <%= val.customer_city %>, 
+                                   <%= val.customer_district %>, 
+                                   <%= val.customer_state %> -
+                                   <%= val.customer_pincode %>
+                              </td>
+
+                              <td>
+                                   <%= val.order_date.toLocaleDateString("en-GB", { 
+                                        day: "2-digit",
+                                        month: "long",
+                                        year: "numeric"
+                                   }) %>
+                              </td>
+
+                              <td>
+                                   <b>₹ <%= val.total_amount %></b><br>
+                                   <small class="text-muted"><%= val.payment_mode %></small>
+                              </td>
+
+                              <td>
+                                   <% let s = val.order_status; %>
+
+                                   <span class="status-badge 
+                                        <% if(s=='pending'){ %>badge-pending<% } %>
+                                        <% if(s=='dispatched'){ %>badge-dispatched<% } %>
+                                        <% if(s=='delivered'){ %>badge-delivered<% } %>
+                                        <% if(s=='cancelled'){ %>badge-cancelled<% } %>
+                                        <% if(s=='returned'){ %>badge-returned<% } %>
+                                   ">
+                                        <%= s.toUpperCase() %>
+                                   </span>
+                              </td>
+                         </tr>
+
+                    <% }) %>
+               </tbody>
+
+          </table>
+     </div>
+     <div class="row">
+          <div class="col-12 text-center mt-5">
+               <a href="/admin/view_orders"><button class="btn btn-secondary"> ↢ BACK </button></a>               
+          </div>
+     </div>
+
+</div>
+
+
+<%- include("footer.ejs") %>

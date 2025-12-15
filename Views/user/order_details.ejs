@@ -1,0 +1,221 @@
+<%- include("navbar.ejs") %>
+
+<style>
+     body {
+          background: #f5f5f5;
+     }
+
+     .order-section {
+          background: #fff;
+          padding: 25px;
+          border-radius: 10px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+          margin-bottom: 25px;
+     }
+
+     .status-badge {
+          padding: 6px 14px;
+          border-radius: 20px;
+          font-weight: 600;
+          font-size: 0.9rem;
+     }
+
+     .status-pending { background: #ffe7b3; color: #a57200; }
+     .status-packed { background: #d9f1ff; color: #005b96; }
+     .status-shipped { background: #d7ffd9; color: #007a0a; }
+     .status-out { background: #fff0d6; color: #b37400; }
+     .status-delivered { background: #d4ffd9; color: #068400; }
+     .status-cancelled { background: #ffd6d6; color: #a30000; }
+
+     .product-img {
+          width: 110px;
+          height: 110px;
+          object-fit: cover;
+          border-radius: 8px;
+     }
+
+     .timeline {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 20px;
+     }
+
+     .timeline-step {
+          text-align: center;
+          width: 20%;
+     }
+
+     .circle {
+          width: 25px;
+          height: 25px;
+          border-radius: 50%;
+          background: #bbb;
+          margin: auto;
+     }
+
+     .active-step .circle {
+          background: #28a745;
+     }
+
+</style>
+
+
+<div class="container my-4">
+
+     <!-- ORDER HEADER -->
+     <div class="order-section">
+
+          <div class="row">
+               <div class="col-md-8">
+                    <h3 class="fw-bold">Order #ZADE00000<%= order_data[0].order_id %></h3>
+
+                    <p class="text-muted">
+                         Placed on:
+                         <b><%= order_data[0].order_date.toLocaleDateString("en-GB") %></b>
+                    </p>
+
+                    <p class="mb-1">
+                         <b>Customer:</b> <%= order_data[0].customer_name %>
+                    </p>
+                    <p class="mb-1">
+                         <b>Mobile:</b> <%= order_data[0].customer_mobile %>
+                    </p>
+               </div>
+
+               <div class="col-md-4 text-end">
+
+                    <% let status = order_data[0].order_status; %>
+
+                    <span class="status-badge
+                         <% if(status=='pending'){ %>status-pending<% } %>
+                         <% if(status=='packed'){ %>status-packed<% } %>
+                         <% if(status=='shipped'){ %>status-shipped<% } %>
+                         <% if(status=='out_for_delivery'){ %>status-out<% } %>
+                         <% if(status=='delivered'){ %>status-delivered<% } %>
+                         <% if(status=='cancelled'){ %>status-cancelled<% } %>">
+
+                         <%= status.toUpperCase() %>
+                    </span>
+
+                    <p class="mt-2">
+                         <b>Payment Mode:</b>
+                         <%= order_data[0].payment_mode === 'cashon' ? 'Cash on Delivery' : 'Online Payment' %>
+                    </p>
+
+                    <p><b>Payment Status:</b> <%= order_data[0].payment_status %></p>
+
+                    <h3 class="fw-bold text-success">
+                         ₹ <%= order_data[0].total_amount %>
+                    </h3>
+               </div>
+          </div>
+
+          <!-- TIMELINE -->
+          <div class="timeline">
+
+               <div class="timeline-step <% if(status=='pending'){ %>active-step<% } %>">
+                    <div class="circle"></div>
+                    <p class="mt-1 small">Pending</p>
+               </div>
+
+               <div class="timeline-step <% if(status=='dispatched' || status=='shipped' || status=='out_for_delivery' || status=='delivered'){ %>active-step<% } %>">
+                    <div class="circle"></div>
+                    <p class="mt-1 small">dispatched</p>
+               </div>
+
+               <div class="timeline-step <% if(status=='delivered'){ %>active-step<% } %>">
+                    <div class="circle"></div>
+                    <p class="mt-1 small">Delivered</p>
+               </div>
+               <div class="timeline-step <% if(status=='cancelled' || status=='out_for_delivery' || status=='delivered'){ %>active-step<% } %>">
+                    <div class="circle"></div>
+                    <p class="mt-1 small">cancelled</p>
+               </div>
+               <div class="timeline-step <% if(status=='returned'){ %>active-step<% } %>">
+                    <div class="circle"></div>
+                    <p class="mt-1 small">returned</p>
+               </div>
+
+
+          </div>
+
+     </div>
+
+     <!-- ORDER ITEMS -->
+     <div class="order-section">
+          <h4 class="fw-bold mb-3">Items in this Order</h4>
+
+          <% order_data.forEach(item => { %>
+
+               <div class="row mb-4 align-items-center">
+
+                    <div class="col-md-2">
+                         <img src="/uploads/<%= item.product_image1 %>" class="product-img">
+                    </div>
+
+                    <div class="col-md-7">
+                         <h5 class="fw-bold"><%= item.product_name %></h5>
+                         <p class="text-muted small mb-1">Brand: <%= item.product_company %></p>
+
+                         <p class="small">
+                              Color: <%= item.product_color %> |
+                              Size: <%= item.product_size %>
+                         </p>
+                    </div>
+
+                    <div class="col-md-3 text-end">
+                         <p class="fw-bold text-success">₹ <%= item.product_price %></p>
+                         <p class="small">Quantity: <b><%= item.product_quantity %></b></p>
+                         <p class="fw-bold">Total: ₹ <%= item.product_amount %></p>
+                    </div>
+
+               </div>
+
+          <% }) %>
+     </div>
+
+     <!-- SHIPPING ADDRESS -->
+     <div class="order-section">
+          <h4 class="fw-bold mb-3">Shipping Address</h4>
+
+          <p class="mb-1"><b><%= order_data[0].customer_name %></b></p>
+
+          <p>
+               <%= order_data[0].customer_area %>, 
+               <%= order_data[0].customer_landmark %>,<br>
+               <%= order_data[0].customer_city %>, 
+               <%= order_data[0].customer_district %>,<br>
+               <%= order_data[0].customer_state %> - <%= order_data[0].customer_pincode %><br>
+               <b>Mobile:</b> <%= order_data[0].customer_mobile %>
+          </p>
+
+     </div>
+
+     <!-- PRICE SUMMARY -->
+     <div class="order-section">
+          <h4 class="fw-bold mb-3">Price Summary</h4>
+
+          <table class="table">
+               <% let total = 0 %>
+               <% order_data.forEach(i => total += i.product_amount); %>
+
+               <tr>
+                    <td>Items Total</td>
+                    <td class="text-end">₹ <%= total %></td>
+               </tr>
+
+               <tr>
+                    <td>Delivery Charges</td>
+                    <td class="text-end text-success">FREE</td>
+               </tr>
+
+               <tr class="fw-bold fs-5">
+                    <td>Total Payable</td>
+                    <td class="text-end text-success">₹ <%= order_data[0].total_amount %></td>
+               </tr>
+          </table>
+     </div>
+
+</div>
+
+<%- include("footer.ejs") %>

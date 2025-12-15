@@ -1,0 +1,50 @@
+<%-include("navbar.ejs") %>
+     <div class="container-fluid">
+          <div class="row p-0">
+               <div class="col-12">
+                    <h1 class="bg-light p-4"> WELCOME TO ABOUT US </h1>
+               </div>
+          </div>
+          <form action="/admin/about_us" method="post" enctype="multipart/form-data">
+               <div class="row">
+                    <div class="col-md-6 mt-3">
+                         background Image 
+                         <img src="/admin/images/<%= about_us[0].background_image %>" alt=""  height="100" width="200">
+                    </div>
+                    <div class="col-md-6 mt-3">
+                         side image
+                         <img src="/admin/images/<%= about_us[0].side_image %>" alt=""  height="100" width="200">
+
+                    </div>
+                    <div class="col-md-6 mt-3">
+                         Choose About Backgroud Image
+                         <input class="form-control border border-secondary " type="file" name="background_image" id="">
+                    </div>
+                    <div class="col-md-6 mt-3">
+                         
+                         Choose About Side Image
+                         <input class="form-control border border-secondary " type="file" name="side_image" id="">
+                    </div>
+                    <div class="col-md-12 mt-3">
+                         Choose About Heading
+                         <input class="form-control border border-secondary" value="<%= about_us[0].heading %>" type="text" name="heading" id="">
+                    </div>
+                    <div class="col-md-12 mt-3">
+                         Choose About Details
+                         <textarea  name="details" id="" class="h-100 form-control border border-secondary "> <%= about_us[0].details %> </textarea>
+                    </div>
+                    <div class="col-md-6 mt-5">
+                         Choose Button Text
+                         <input class="form-control border border-secondary " type="text" name="button_text" id="" value="<%= about_us[0].button_text %>">
+                    </div>
+                    <div class="col-md-6 mt-5">
+                         Choose Button Link
+                         <input class="form-control border border-secondary " type="text" name="button_link" id="" value="<%= about_us[0].button_link %>">
+                    </div>
+                    <div class="col-md-12 mt-3 text-center">
+                         <button class="btn btn-success">SAVE ABOUT DETAILS </button>
+                    </div>
+               </div>
+          </form>
+     </div>
+     <%-include("footer.ejs") %>

@@ -1,0 +1,225 @@
+<%- include("navbar.ejs") %>
+     <div id="print_page" class="container my-4">
+          <style>
+          body {
+               background: #f4f4f4;
+          }
+
+          .invoice-card {
+               background: #fff;
+               border-radius: 10px;
+               padding: 25px;
+               box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+               margin-bottom: 25px;
+          }
+
+          .section-title {
+               font-size: 1.4rem;
+               font-weight: 700;
+               margin-bottom: 12px;
+          }
+
+          .order-info {
+               font-size: 1.05rem;
+               line-height: 1.6;
+          }
+
+          .product-row img {
+               width: 70px;
+               height: 70px;
+               object-fit: cover;
+               border-radius: 8px;
+          }
+
+          .summary-table th,
+          .summary-table td {
+               padding: 12px;
+               vertical-align: middle;
+          }
+
+          .summary-table td strong {
+               font-size: 1.05rem;
+          }
+
+          .print-btn {
+               background: #ff9900;
+               border: none;
+               color: #fff;
+               border-radius: 5px;
+               padding: 12px 25px;
+               font-size: 1.2rem;
+               font-weight: 600;
+          }
+
+          .print-btn:hover {
+               background: #e68a00;
+          }
+     </style>
+          <div class="row p-5">
+
+               <!-- ORDER HEADER -->
+               <div class="invoice-card">
+                    <div class="row">
+                         <div class="col-md-6">
+                              <img src="/zade.png" alt="Logo" height="50">
+                              <h2 class="fw-bold mt-3">ZADE PATIL PVT. LTD.</h2>
+                         </div>
+
+                         <div class="col-md-6 text-end">
+                              <h5 class="fw-bold text-muted">ORDER SUMMARY</h5>
+                              <p class="fw-semibold">Order ID:
+                                   <span class="text-dark">#ZADE000000<%= order_data[0].order_id %></span>
+                              </p>
+                              <p>Status: <b>
+                                        <%= order_data[0].order_status %>
+                                   </b></p>
+                              <p>Payment: <b>
+                                        <%= order_data[0].payment_mode=="cashon" ? "Cash on Delivery" :
+                                             order_data[0].payment_mode %>
+                                   </b></p>
+                         </div>
+                    </div>
+               </div>
+
+
+               <!-- CUSTOMER + SHIPPING INFO -->
+               <div class="invoice-card">
+
+                    <div class="section-title">Customer & Shipping Details</div>
+
+                    <div class="row">
+                         <div class="col-md-6">
+                              <h6 class="fw-bold fs-5">Customer Info</h6>
+                              <p class="order-info">
+                                   <b>Name:</b>
+                                   <%= order_data[0].customer_name %><br>
+                                        <b>Mobile:</b>
+                                        <%= order_data[0].customer_mobile %><br>
+                                             <b>Order Date:</b>
+                                             <%= order_data[0].order_date.toLocaleDateString("en-GB", { day: "2-digit" ,
+                                                  month: "short" , year: "numeric" }) %>
+                              </p>
+                         </div>
+
+                         <div class="col-md-6">
+                              <h6 class="fw-bold fs-5">Shipping Address</h6>
+                              <p class="order-info">
+                                   <%= order_data[0].customer_landmark %>, <%= order_data[0].customer_area %><br>
+                                             <%= order_data[0].customer_city %>, <%= order_data[0].customer_district %>
+                                                       <br>
+                                                       <%= order_data[0].customer_state %> - <%=
+                                                                 order_data[0].customer_pincode %>
+                              </p>
+                         </div>
+                    </div>
+
+               </div>
+
+
+
+               <!-- PRODUCTS SUMMARY -->
+               <div class="invoice-card">
+
+                    <div class="section-title">Order Items</div>
+
+                    <table class="table table-bordered summary-table">
+                         <thead class="table-light">
+                              <tr>
+                                   <th>Item</th>
+                                   <th>Details</th>
+                                   <th class="text-center">Qty</th>
+                                   <th class="text-center">Price</th>
+                                   <th class="text-end">Total</th>
+                              </tr>
+                         </thead>
+
+                         <tbody>
+                              <% var sum=0 %>
+                                   <% order_data.map((val, i)=> { %>
+
+                                        <tr class="product-row">
+                                             <!-- PRODUCT IMAGE -->
+                                             <td>
+                                                  <img src="/uploads/<%= val.product_image1 %>" alt="Product">
+                                             </td>
+
+                                             <!-- PRODUCT NAME + BRAND -->
+                                             <td>
+                                                  <strong>
+                                                       <%= val.product_name %>
+                                                  </strong> <br>
+                                                  <span class="text-muted small">
+                                                       <%= val.product_company %> | Size: <%= val.product_size %>
+                                                  </span>
+                                             </td>
+
+                                             <td class="text-center">
+                                                  <%= val.product_quantity %>
+                                             </td>
+                                             <td class="text-center">₹ <%= val.product_price %>
+                                             </td>
+                                             <td class="text-end">₹ <%= val.product_amount %>
+                                             </td>
+                                        </tr>
+
+                                        <% sum +=val.product_amount %>
+                                             <% }) %>
+                         </tbody>
+
+                         <tfoot>
+                              <tr>
+                                   <th colspan="4" class="text-end fs-5">Grand Total:</th>
+                                   <th class="text-end fs-5 fw-bold text-success">₹ <%= sum %> /-</th>
+                              </tr>
+                         </tfoot>
+
+                    </table>
+
+               </div>
+               <div class="col-12 text-center mt-4">
+
+     <% let st = order_data[0].order_status; %>
+
+     <!-- DISPATCH -->
+     <% if(st === 'pending') { %>
+          <a href="/admin/transfer/<%= order_data[0].order_id %>/dispatched">
+               <button class="btn btn-primary px-4 py-2 m-1">Mark as Dispatched</button>
+          </a>
+     <% } %>
+
+     <!-- DELIVERED -->
+     <% if(st === 'dispatched' || st === 'shipped' || st === 'out_for_delivery') { %>
+          <a href="/admin/transfer/<%= order_data[0].order_id %>/delivered">
+               <button class="btn btn-success px-4 py-2 m-1">Mark as Delivered</button>
+          </a>
+     <% } %>
+
+     <!-- CANCEL -->
+     <% if(st === 'pending' || st === 'dispatched') { %>
+          <a href="/admin/transfer/<%= order_data[0].order_id %>/cancelled">
+               <button class="btn btn-danger px-4 py-2 m-1">Cancel Order</button>
+          </a>
+     <% } %>
+
+     <!-- RETURNED -->
+     <% if(st === 'delivered') { %>
+          <a href="/admin/transfer/<%= order_data[0].order_id %>/returned">
+               <button class="btn btn-warning px-4 py-2 m-1">Mark as Returned</button>
+          </a>
+     <% } %>
+
+     <!-- REJECTED -->
+     <% if(st === 'pending') { %>
+          <a href="/admin/transfer/<%= order_data[0].order_id %>/rejected">
+               <button class="btn btn-dark px-4 py-2 m-1">Reject Order</button>
+          </a>
+     <% } %>
+
+</div>
+
+          </div>
+          <div class="col-12 text-center">
+               <a href="/admin/view_orders/<%= order_data[0].order_status %>"> <button class="btn btn-secondary"> ↢ BACK </button></a>
+          </div>
+     </div>
+<%- include("footer.ejs") %>

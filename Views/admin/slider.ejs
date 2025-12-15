@@ -1,0 +1,35 @@
+<%- include("navbar.ejs") %>
+
+<!-- <style></style> -->
+
+<div class="container-fluid my-4">
+
+     <h1 class="bg-light p-4 header-title">Manage Slider</h1>
+
+     <div class="row g-4 mt-2 p-3">
+
+          <!-- Add Slider -->
+          <div class="col-md-6">
+               <div class="manage-box">
+                    <h3 class="mb-3">Add Slider</h3>
+                    <a href="/admin/add_slider">
+                         <button class="btn btn-primary manage-btn">Add New Slider</button>
+                    </a>
+               </div>
+          </div>
+
+          <!-- View Slider -->
+          <div class="col-md-6">
+               <div class="manage-box">
+                    <h3 class="mb-3">View Sliders</h3>
+                    <a href="/admin/view_slider">
+                         <button class="btn btn-success manage-btn">View All Sliders</button>
+                    </a>
+               </div>
+          </div>
+
+     </div>
+
+</div>
+
+<%- include("footer.ejs") %>

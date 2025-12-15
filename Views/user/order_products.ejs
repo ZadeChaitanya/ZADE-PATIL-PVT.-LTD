@@ -1,0 +1,169 @@
+<%- include("navbar.ejs") %>
+     <style>
+          body {
+               background: #f5f5f5;
+          }
+
+          .order-card {
+               background: #fff;
+               border-radius: 10px;
+               padding: 25px;
+               box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+               margin-top: 25px;
+               transition: 0.2s ease-in-out;
+          }
+
+          .order-card:hover {
+               box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+          }
+
+          .status-badge {
+               font-size: 0.9rem;
+               padding: 6px 14px;
+               border-radius: 18px;
+               font-weight: 600;
+          }
+
+          .status-pending {
+               background: #ffe7b3;
+               color: #a57200;
+          }
+
+          .status-dispatched {
+               background: #d9f1ff;
+               color: #005b96;
+          }
+
+          .status-returned {
+               background: #d7ffd9;
+               color: #007a0a;
+          }
+
+          .status-out {
+               background: #fff0d6;
+               color: #b37400;
+          }
+
+          .status-delivered {
+               background: #d4ffd9;
+               color: #068400;
+          }
+
+          .status-cancelled {
+               background: #ffd6d6;
+               color: #a30000;
+          }
+     </style>
+     <% if(orders.length> 0 ) { %>
+          <div class="container my-4">
+               <!-- ORDER PREVIEW CARD -->
+               <% orders.map((val,i)=>{ %>
+                    <div class="order-card">
+                         <div class="row">
+                              <!-- LEFT SIDE (Customer + Order Info) -->
+                              <div class="col-md-8">
+                                   <h4 class="fw-bold mb-1">
+                                        Order #ZADE00000<%= val.order_id %>
+                                   </h4>
+                                   <p class="text-muted mb-2">
+                                        Placed on:
+                                        <b>
+                                             <%= val.order_date.toLocaleDateString("en-GB") %>
+                                        </b>
+                                   </p>
+                                   <p class="mb-1">
+                                        <b>Customer:</b>
+                                        <%= val.customer_name %>
+                                   </p>
+                                   <p class="mb-1">
+                                        <b>Mobile:</b>
+                                        <%= val.customer_mobile %>
+                                   </p>
+                                   <p class="mb-1">
+                                        <b>Address:</b>
+                                        <%= val.customer_area %>,
+                                             <%= val.customer_landmark %>,<br>
+                                                  <%= val.customer_city %>,
+                                                       <%= val.customer_district %>,<br>
+                                                            <%= val.customer_state %> -
+                                                                 <%= val.customer_pincode %>
+                                   </p>
+                              </div>
+                              <!-- RIGHT SIDE (Status + Payment + Total) -->
+                              <div class="col-md-4 text-end">
+                                   <% let status=val.order_status; %>
+                                        <!-- Status Badge -->
+                                        <span class="status-badge
+                         <% if(status=='pending'){ %>status-pending<% } %>
+                         <% if(status=='dispatched'){ %>status-dispatched<% } %>
+                         <% if(status=='returned'){ %>status-returned<% } %>
+                         <% if(status=='out_for_delivery'){ %>status-out<% } %>
+                         <% if(status=='delivered'){ %>status-delivered<% } %>
+                         <% if(status=='cancelled'){ %>status-cancelled<% } %>">
+                                             <%= status.toUpperCase() %>
+                                        </span>
+                                        <p class="mt-2">
+                                             <b>Payment Mode:</b>
+                                             <%= val.payment_mode==="cashon" ? "Cash On Delivery" : "Online Payment" %>
+                                        </p>
+                                        <p>
+                                             <b>Payment Status:</b>
+                                             <%= val.payment_status %>
+                                        </p>
+                                        <h3 class="text-success fw-bold">
+                                             ₹ <%= val.total_amount %>
+                                        </h3>
+                              </div>
+                         </div>
+                         <!-- VIEW FULL ORDER BUTTON -->
+                         <div class="col-12 mt-4">
+                              <% if(val.order_status !='delivered' ){ %>
+                                   <div class="d-flex flex-wrap justify-content-end gap-3">
+                                             <% if(val.order_status =='cancelled' || val.order_status =='rejected'  ){ %> 
+
+                                             <% } else { %>
+                                                       <!-- Cancel Order -->
+                                                       <a href="/cancel_order/<%= val.order_id %>"
+                                                            class="btn fw-semibold text-white px-4 py-2"
+                                                            style="background-color:#f03528; border-radius:6px;">
+                                                            Cancel Order
+                                                       </a>
+                                                       
+                                                       <!-- Edit Address -->
+                                                       <a href="/edit_order_address/<%= val.order_id %>"
+                                                            class="btn fw-semibold text-dark px-4 py-2"
+                                                            style="background-color:#f4e93a; border-radius:6px;">
+                                                            Edit Order Address
+                                                       </a>
+                                                       <% } %>
+
+                                        <!-- View Full Order -->
+                                        <a href="/order_details/<%= val.order_id %>"
+                                             class="btn fw-semibold text-white px-4 py-2"
+                                             style="background-color:#2874f0; border-radius:6px;">
+                                             View Full Order &nbsp; ↣
+                                        </a>
+
+                                   </div>
+                                   <% } %>
+
+                         </div>
+
+                    </div>
+                    <% }) %>
+          </div>
+          <% } else { %>
+               <div class="container">
+                    <div class="row">
+                         <div class="col-md-12 text-center">
+                              <h1>You Havn`t Any order  </h1>
+                              <a href="/shop">
+                                   <button class="btn px-5 py-3 fs-4 text-white shadow-lg"
+                                        style="background-color: rgba(251, 102, 27, 0.9); border-radius: 4px;"> 🛒 Let`s
+                                        DO Shopping 🛒 </button>
+                              </a>
+                         </div>
+                    </div>
+               </div>
+               <% } %>
+                    <%- include("footer.ejs") %>

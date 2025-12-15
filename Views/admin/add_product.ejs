@@ -1,0 +1,177 @@
+<%-include("navbar.ejs") %>
+
+     <div class="container-fluid">
+          <div class="row p-0">
+               <div class="col-12">
+                    <h1 class="bg-light p-4"> ADD PRODUCTS </h1>
+               </div>
+          </div>
+          <form action="/admin/add_product" method="post" enctype="multipart/form-data">
+               <div class="row">
+                    <div class="col-md-8">
+
+                         <div class="row">
+                              <div class="col-md-6 mt-4">
+                                   Choose Product Category <b class="text-danger"> * </b>
+                                   <select name="product_category" id=""
+                                        class="form-control border border-secondary-subtle" required>
+                                        <option value="" class="text-center">Choose ↴ </option>
+                                        <% category.map((val,i)=>{ %>
+                                             <option value="<%= val.id %>">
+                                                  <%= val.category %>
+                                             </option>
+                                             <% }) %>
+                                   </select>
+                              </div>
+                              <div class="col-md-6 mt-4">
+                                   Choose Product Name <b class="text-danger"> * </b>
+                                   <input type="text" name="product_name" id=""
+                                        class="form-control border border-secondary-subtle shadow-sm" required>
+                              </div>
+                              <div class="col-md-6 mt-4">
+                                   Choose Product Brand / Company <b class="text-danger"> * </b>
+                                   <input type="text" name="product_company" id=""
+                                        class="form-control border border-secondary-subtle shadow-sm" list="data"
+                                        required>
+                              </div>
+                              <datalist id="data">
+                                   <option value="Nike"></option>
+                                   <option value="Adidas"></option>
+                                   <option value="Puma"></option>
+                                   <option value="Spike"></option>
+                              </datalist>
+                              <div class="col-md-6 mt-4">
+                                   Choose Product Color <b class="text-danger"> * </b>
+                                   <input type="text" name="product_color" id=""
+                                        class="form-control border border-secondary-subtle shadow-sm" required>
+                              </div>
+                              <div class="col-md-6 mt-4">
+                                   Choose Product Lebel <b class="text-danger"> * </b>
+                                   <select name="product_label"
+                                        class="form-control border border-secondary-subtle shadow-sm" id="" required>
+                                        <option value="" class="text-center"> Choose ↴ </option>
+                                        <option value="feacherd">Featured</option>
+                                        <option value="best_selling">Best Selling</option>
+                                        <option value="flash_sales">Flash Sales</option>
+                                   </select>
+                              </div>
+                              <div class="col-md-6 mt-4">
+                                   Choose Product Image 1 <b class="text-danger"> * </b>
+                                   <input type="file" accept="image/*" name="product_image1" id=""
+                                        class="form-control border border-secondary-subtle shadow-sm" required>
+                              </div>
+                              <div class="col-md-6 mt-4">
+                                   Choose Product Image 2 <b class="text-danger"> * </b>
+                                   <input type="file" accept="image/*" name="product_image2" id=""
+                                        class="form-control border border-secondary-subtle shadow-sm" required>
+                              </div>
+                              <div class="col-md-6 mt-4">
+                                   Choose Product Image 3
+                                   <input type="file" accept="image/*" name="product_image3" id=""
+                                        class="form-control border border-secondary-subtle shadow-sm">
+                              </div>
+                              <div class="col-md-6 mt-4">
+                                   Choose Product Image 4
+                                   <input type="file" accept="image/*" name="product_image4" id=""
+                                        class="form-control border border-secondary-subtle shadow-sm">
+                              </div>
+
+                         </div>
+                    </div>
+                    <div class="col-md-4 mt-5">
+                         <div class="row">
+                              <% sizes=['XS','S','M','L','XL','XXL'] %>
+                                   <table class="table table-bordered table-danger">
+                                        <thead>
+                                             <tr>
+                                                  <th>Product SIZE </th>
+                                                  <th>Product Prices</th>
+                                                  <th>Product Duplicate Price </th>
+                                             </tr>
+                                        </thead>
+                                        <tbody>
+                                             <% for(let i=0;i<sizes.length;i++){ %>
+                                                  <tr>
+                                                       <td><input readonly type="text"
+                                                                 class="form-control border border-secondary-subtle text-center"
+                                                                 name="product_size" value="<%= sizes[i] %>" id=""></td>
+                                                       <td><input type="text"
+                                                                 class="form-control border border-secondary-subtle shadow-sm"
+                                                                 name="product_price" value="" id=""></td>
+                                                       <td><input type="text"
+                                                                 class="form-control border border-secondary-subtle shadow-sm"
+                                                                 name="product_duplicate_price" value="" id=""></td>
+                                                  </tr>
+                                                  <% } %>
+                                        </tbody>
+                                   </table>
+                         </div>
+
+                    </div>
+               </div>
+               <div class="col-12 ">
+                    Enter Product Details <b class="text-danger"> * </b>
+                    <textarea name="product_details" id="" class="form-control border border-secondary-subtle shadow-sm"
+                         required> </textarea>
+               </div>
+
+               <div class="div text-center mt-4">
+                    <button class="btn btn-success"> ADD PRODUCT </button>
+               </div>
+          </form>
+           <div class="text-center">
+                    <a href="/admin/shop">
+                         <button class="btn-back"> <b>↢</b> &nbsp; Back</button>
+                    </a>
+               </div>
+
+     </div>
+
+     <%-include("footer.ejs") %>
+
+
+
+
+          <!-- 
+Proudct  
+     Product Category
+     Product Name 
+     Product Company 
+     Product Color
+     Product Label (Featured , Best selling  ,Flash sales)
+     Product Image 1
+     Product Image 2
+     Product Image 3
+     Product Image 4
+     Product Details
+
+     CRAETE TABLE product (
+          id INT PRIMARY KEY AUTO_INCREMENT,
+          product_category INT,
+          product_name VARCHAR(100),
+          product_company VARCHAR(100),
+          product_color VARCHAR(100),
+          product_label VARCHAR(50),
+          product_details TEXT,
+          product_image1 TEXT,
+          product_image2 TEXT,
+          product_image3 TEXT,
+          product_image4 TEXT
+     );
+
+
+
+
+     CREATE TABLE product_prissing(
+          id INT PRIMARY KEY AUTO_INCREMENT,
+          product_id INT,
+          product_size VARCHAR(50),
+          product_price INT,
+          product_duplicate_price INT
+     );
+     Product Size
+     Product Price 
+     Product Duplicate Price 
+
+
+  -->

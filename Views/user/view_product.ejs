@@ -1,0 +1,219 @@
+<style>
+     img[onclick] {
+          transition: .2s;
+     }
+
+     img[onclick]:hover {
+          transform: scale(1.05);
+          box-shadow: 0 0 10px #ccc;
+     }
+</style>
+<%- include("navbar.ejs") %>
+
+     <div class="container my-5">
+
+          <div class="row">
+
+               <!-- LEFT: IMAGE GALLERY -->
+               <div class="col-md-5">
+
+                    <!-- Main Image -->
+                    <div class="border rounded shadow-sm mb-3" style="overflow:hidden;">
+                         <img src="/uploads/<%= product[0].product_image1 %>" id="main_img" class="img-fluid w-100"
+                              style="height:430px; object-fit:cover;">
+                    </div>
+
+                    <!-- Thumbnail Images -->
+                    <div class="d-flex gap-2 flex-wrap">
+
+                         <% const images=[ product[0].product_image1, product[0].product_image2,
+                              product[0].product_image3, product[0].product_image4 ] %>
+
+                              <% images.forEach(img=> { %>
+                                   <img src="/uploads/<%= img %>"
+                                        onclick="document.getElementById('main_img').src=this.src"
+                                        class="border rounded shadow-sm"
+                                        style="height:90px; width:90px; object-fit:cover; cursor:pointer;">
+                                   <% }) %>
+
+                    </div>
+               </div>
+
+
+               <!-- RIGHT: PRODUCT INFO -->
+               <div class="col-md-7 ps-5">
+
+                    <!-- Brand Tag -->
+                    <span class="badge bg-dark fs-4 px-3 py-2 mb-3">
+                         <%= product[0].product_company %>
+                    </span>
+
+                    <!-- Title -->
+                    <h3 class="fw-bold mb-3">
+                         <%= product[0].product_name %>
+                    </h3>
+
+                    <!-- Color -->
+                    <p class="fs-5 mb-3">
+                         Color:
+                         <b>
+                              <%= product[0].product_color %>
+                         </b>
+                         <span style="color:<%= product[0].product_color %>;">
+                              <i class="fa-solid fa-circle"></i>
+                         </span>
+                    </p>
+
+                    <!-- Size Display -->
+                    <p class="fs-5 mb-1">Size: <b><span id="size" class="fw-bold text-dark">
+                                   <%= product_prissing[0].product_size %>
+                              </span></b></p>
+
+                    <!-- Price Display -->
+                    <h4 class=" fw-bold mb-4">
+                         <span class="text-success fs-2"> ₹ </span> <span id="price"
+                              class="text-success fs-2 fw-bolder">
+                              <%= product_prissing[0].product_price %> /-
+                         </span><br>
+                         <del> <span class="text-danger "> ₹ </span> <span id="dprice" class="text-danger">
+                                   <%= product_prissing[0].product_duplicate_price %> /-
+                              </span></del>
+                    </h4>
+
+
+                    <!-- Size Buttons -->
+                    <div class="mb-4">
+                         <% product_prissing.map((val,i)=>{ %>
+                              <% if (val.product_price> 0) { %>
+                                   <button
+                                        onclick="setprice('<%= val.id %>',this,'<%= val.product_price %>','<%= val.product_size %>','<%= val.product_duplicate_price %>')"
+                                        class="btn btn-dark border border-dark  rounded-3 me-2 mb-2 btn_size">
+                                        <%= val.product_size %>
+                                   </button>
+                                   <% } %>
+                                        <% }) %>
+                    </div>
+
+
+
+                    <!-- Wishlist and Add -->
+                    <div class="d-flex gap-3 mt-4">
+                         <button onclick="add_to_cart()" class="btn btn-dark px-4 py-2">Add to Cart</button>
+                         <button class="btn btn-outline-secondary px-4 py-2">Wishlist</button>
+                    </div>
+                    <!-- Product Details -->
+                    <p class="text-muted fs-5">
+                         <%= product[0].product_details %>
+                    </p>
+
+               </div>
+
+          </div>
+     </div>
+     <!-- Login required modal -->
+     <div id="loginModal" class="modal-overlay">
+          <div class="modal-box">
+               <div class="modal-header">
+                    <h3>Login Required</h3>
+               </div>
+
+               <p>To add this product to your cart you need to log in first.</p>
+
+               <div class="modal-actions">
+                    <button id="loginYesBtn" class="btn-primary">Login</button>
+                    <button id="loginNoBtn" class="btn-secondary">Cancel</button>
+               </div>
+          </div>
+     </div>
+
+
+
+     <script>
+          let active_product_prissing_id = '';
+          function setprice(price_id, ele, price, size, dprice) {
+               active_product_prissing_id = price_id;
+               $(".btn_size").addClass('btn-dark');
+               ele.classList.remove('btn-dark');
+               document.getElementById("price").innerHTML = price;
+               document.getElementById("size").innerHTML = size;
+               document.getElementById("dprice").innerHTML = dprice;
+          }
+
+     </script>
+
+
+
+     <!--      login modal script  -->
+     <script>
+          const loginModal = document.getElementById("loginModal");
+          const loginYesBtn = document.getElementById("loginYesBtn");
+          const loginNoBtn = document.getElementById("loginNoBtn");
+
+          function openLoginModal() {
+               loginModal.classList.add("show");
+          }
+
+          function closeLoginModal() {
+               loginModal.classList.remove("show");
+          }
+
+          loginYesBtn.onclick = function () {
+               location.href = '/login?product_id=<%= product[0].id %>';
+          };
+
+          loginNoBtn.onclick = function () {
+               location.href = '/view_product/<%= product[0].id %>';
+          };
+
+          function add_to_cart() {
+               if ('<%= is_login %>' == 'false') {
+                    openLoginModal();
+               }
+               else if (active_product_prissing_id == '') {
+                    alert('Select product size.');
+               }
+               else {
+                    alert('PRODUCT ADDED TO CART   - explore more ....');
+                    const url = '/add_to_cart/<%= product[0].id %>/' + active_product_prissing_id;
+                    location.href = url;
+
+               }
+          }
+     </script>
+     <script>
+          const urlParams = new URLSearchParams(window.location.search);
+          if (urlParams.get("msg") === "login_success") {
+               alert("Successfully logged in! Now continue shopping.");
+          }
+     </script>
+
+
+
+
+     <%- include("footer.ejs") %>
+
+          <!-- 
+     function add_to_cart() {
+               
+               if('<%= is_login %>' == 'false'){
+                    alert("to add product to cart you have to login ");
+                    if(confirm("YOU WANT TO LOGIN ")){
+                         let url = '/login'
+                         location.href=url;
+                    }
+                    else{
+                         let url = '/view_product/<%= product[0].id %>'
+                         location.href = url;
+                    }
+               }
+               else if (active_product_prissing_id == '' ) {
+                    alert('SELCT PRODUCT SIZE ......');
+               }
+               else {
+                    var url = '/add_to_cart/<%= product[0].id %>/' + active_product_prissing_id;
+                    location.href=url;
+               }
+
+
+          }
+     -->

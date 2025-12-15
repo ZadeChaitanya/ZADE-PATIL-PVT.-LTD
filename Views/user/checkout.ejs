@@ -1,0 +1,163 @@
+<%- include("navbar.ejs") %>
+
+<style>
+     .checkout-card {
+          background: #fff;
+          padding: 25px;
+          border-radius: 8px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+          margin-bottom: 25px;
+     }
+
+     .form-label {
+          font-weight: 600;
+          font-size: 0.95rem;
+     }
+
+     .summary-card {
+          background: #fff;
+          padding: 20px;
+          border-radius: 8px;
+          box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+          position: sticky;
+          top: 90px;
+     }
+
+     table td, table th {
+          padding: 10px 5px;
+     }
+
+     .section-title {
+          font-size: 1.3rem;
+          font-weight: 700;
+          margin-bottom: 15px;
+          color: #333;
+     }
+</style>
+
+
+<form action="/order" method="post">
+<div class="container my-5">
+
+     <div class="row">
+
+          <!-- LEFT: ADDRESS FORM -->
+          <div class="col-md-8">
+               
+               <div class="checkout-card">
+
+                    <div class="section-title">Delivery Information</div>
+
+                    <div class="row g-4">
+
+                         <div class="col-md-6">
+                              <label class="form-label">Customer Name <b class="text-danger">*</b> </label>
+                              <input type="text" name="customer_name" class="form-control" required>
+                         </div>
+
+                         <div class="col-md-6">
+                              <label class="form-label">Mobile Number <b class="text-danger">*</b> </label>
+                              <input type="number" name="customer_mobile" class="form-control" required>
+                         </div>
+
+                         <div class="col-md-6">
+                              <label class="form-label">State <b class="text-danger">*</b> </label>
+                              <input type="text" name="customer_state" class="form-control" required >
+                         </div>
+
+                         <div class="col-md-6">
+                              <label class="form-label">District <b class="text-danger">*</b> </label>
+                              <input type="text" name="customer_district" class="form-control" required>
+                         </div>
+
+                         <div class="col-md-6">
+                              <label class="form-label">City <b class="text-danger">*</b> </label>
+                              <input type="text" name="customer_city" class="form-control" required>
+                         </div>
+
+                         <div class="col-md-6">
+                              <label class="form-label">Area / Locality <b class="text-danger">*</b> </label>
+                              <input type="text" name="customer_area" class="form-control" required>
+                         </div>
+
+                         <div class="col-md-6">
+                              <label class="form-label">Landmark  </label>
+                              <input type="text" name="customer_landmark" class="form-control">
+                         </div>
+
+                         <div class="col-md-6">
+                              <label class="form-label">Pincode <b class="text-danger">*</b> </label>
+                              <input type="number" name="customer_pincode" class="form-control" required>
+                         </div>
+
+                         <div class="col-md-6">
+                              <label class="form-label">Payment Mode <b class="text-danger">*</b> </label>
+                              <select class="form-control" name="payment_mode" required>
+                                   <option value="">SELECT</option>
+                                   <option value="online">Online Payment</option>
+                                   <option value="cashon">Cash On Delivery</option>
+                              </select>
+                         </div>
+
+                    </div>
+               </div>
+          </div>
+
+
+          <!-- RIGHT: PRODUCT SUMMARY -->
+          <div class="col-md-4">
+
+               <div class="summary-card">
+
+                    <h5 class="fw-bold mb-3">Order Summary</h5>
+
+                    <% var total_price = 0, total_product = 0 %>
+
+                    <table class="w-100">
+                         <tbody>
+                         <% cart.map((val,i)=>{ %>
+
+                              <tr>
+                                   <td class="text-muted"><%= val.product_name %></td>
+                                   <td>x <%= val.quantity %></td>
+                                   <td class="text-end fw-semibold">
+                                        ₹ <%= val.product_price * val.quantity %>
+                                   </td>
+                              </tr>
+
+                         <% total_product += val.quantity; total_price += val.product_price * val.quantity; %>
+                         <% }) %>
+                         </tbody>
+
+                         <tfoot class="border-top">
+                              <tr>
+                                   <th>Total Items</th>
+                                   <th><%= total_product %></th>
+                                   <th class="text-end text-success fw-bold">
+                                        ₹ <%= total_price %>
+                                   </th>
+                              </tr>
+                         </tfoot>
+                    </table>
+
+               </div>
+
+          </div>
+
+
+          <!-- ORDER BUTTON -->
+          <div class="col-12 text-center mt-4">
+               <button 
+               class="btn px-5 py-3 fs-4 text-white shadow-lg"
+               style="background-color: rgb(251, 100, 27); border-radius: 4px;"
+               >
+               Place Order
+               </button>
+          </div>
+
+     </div>
+
+</div>
+</form>
+
+<%- include("footer.ejs") %>

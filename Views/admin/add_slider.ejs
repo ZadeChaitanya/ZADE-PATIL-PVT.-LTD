@@ -1,0 +1,61 @@
+<%- include("navbar.ejs") %>
+
+<!-- <style></style> -->
+
+
+<div class="container my-4">
+
+     <h1 class="bg-light p-4 page-title">Add Slider Details</h1>
+
+     <div class="row justify-content-center mt-3">
+          <div class="col-md-6">
+
+               <div class="form-wrapper">
+
+                    <form action="/admin/add_slider" method="post" enctype="multipart/form-data">
+
+                         <label class="form-label">Slider Heading</label>
+                         <input type="text" name="slider_heading" class="form-control mb-3" required>
+                         
+                         <label class="form-label">Slider Info</label>
+                         <textarea name="slider_info" class="form-control mb-3" required></textarea>
+                         
+                         <label class="form-label">Slider Image</label>
+                         <input type="file" name="slider_image" accept="image/*" class="form-control mb-4" required>
+                         
+                         
+                         <label class="form-label">button text </label>
+                         <input type="text" name="button_text" class="form-control mb-3" required>
+                         
+                         <label class="form-label"> button link / url </label>
+                         <input type="text" name="button_url" class="form-control mb-3" required>
+                         
+                         <div class="text-center">
+                              <button class="btn btn-primary btn-submit">Add Slider</button>
+                         </div>
+                    </form>
+
+               </div>
+
+          </div>
+     </div>
+     <div class="text-center">
+         <a href="/admin/slider">
+              <button class="btn-back"> ↢ &nbsp; Back</button>
+         </a>
+    </div>
+
+</div>
+
+<%- include("footer.ejs") %>
+
+
+<!-- 
+CREATE TABLE SLIDER (
+     id INT PRIMARY KEY AUTO_INCREMENT,
+     slider_heading    VARCHAR(100),
+     slider_info     TEXT,
+     slider_image     TEXT
+
+
+); -->

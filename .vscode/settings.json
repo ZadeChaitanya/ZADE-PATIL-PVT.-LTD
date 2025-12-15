@@ -1,0 +1,7 @@
+{
+  "git.ignoreLimitWarning": true,
+  "editor.matchBrackets": "always",
+  "workbench.colorCustomizations": {
+    "editorStickyScroll.background": "#00000000"
+  }
+}

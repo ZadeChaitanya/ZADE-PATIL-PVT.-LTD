@@ -1,0 +1,104 @@
+<%- include("Navbar.ejs") %>
+
+<!-- <style></style> -->
+
+<div class="container py-4">
+
+     <div class="admin-title">About Company</div>
+
+     <div class="card shadow-sm p-4">
+
+          <form action="/admin/about_company" method="post">
+
+               <!-- Basic Details -->
+               <div class="card-section">
+                    <div class="section-title">Basic Information</div>
+
+                    <div class="row g-4">
+                         <div class="col-md-4">
+                              <label class="form-label">Company Name</label>
+                              <input class="form-control" type="text" name="company_name" value="<%= about_company[0].company_name %>">
+                         </div>
+
+                         <div class="col-md-4">
+                              <label class="form-label">Company Mobile</label>
+                              <input class="form-control" type="number" name="company_mobile" value="<%= about_company[0].company_mobile %>">
+                         </div>
+
+                         <div class="col-md-4">
+                              <label class="form-label">Company Email</label>
+                              <input class="form-control" type="email" name="company_email" value="<%= about_company[0].company_email %>">
+                         </div>
+
+                         <div class="col-md-12">
+                              <label class="form-label">Company Address</label>
+                              <textarea class="form-control" rows="3" name="address"><%= about_company[0].address %></textarea>
+                         </div>
+                    </div>
+               </div>
+
+               <!-- Social Media -->
+               <div class="card-section">
+                    <div class="section-title">Social Media</div>
+
+                    <div class="row g-4">
+                         <div class="col-md-3">
+                              <label class="form-label">WhatsApp</label>
+                              <input class="form-control" type="number" name="company_whatsapp" value="<%= about_company[0].company_whatsapp %>">
+                         </div>
+
+                         <div class="col-md-3">
+                              <label class="form-label">LinkedIn</label>
+                              <input class="form-control" type="text" name="company_linkedin" value="<%= about_company[0].company_linkedin %>">
+                         </div>
+
+                         <div class="col-md-3">
+                              <label class="form-label">Facebook</label>
+                              <input class="form-control" type="text" name="company_facebook" value="<%= about_company[0].company_facebook %>">
+                         </div>
+
+                         <div class="col-md-3">
+                              <label class="form-label">YouTube</label>
+                              <input class="form-control" type="text" name="company_youtube" value="<%= about_company[0].company_youtube %>">
+                         </div>
+                    </div>
+               </div>
+
+               <div class="text-center mt-4">
+                    <button class="btn btn-success btn-save">Save Company</button>
+               </div>
+
+          </form>
+
+     </div>
+</div>
+
+<%- include("Footer.ejs") %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 
+
+     CREATE TABLE company_details (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    company_name VARCHAR(150) NOT NULL,
+    company_mobile VARCHAR(15),
+    company_email VARCHAR(150),
+    address TEXT,
+    company_whatsapp VARCHAR(15),
+    company_linkedin VARCHAR(255),
+    company_facebook VARCHAR(255),
+    company_youtube VARCHAR(255)
+); -->

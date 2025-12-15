@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" href="/zade.png">
+  <title> ZADE PATIL PVT. LTD. </title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="author" content="">
+  <meta name="keywords" content="">
+  <meta name="description" content="">
+  <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+  <link rel="stylesheet" type="text/css" href="/icomoon/icomoon.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+    crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.min.js" integrity="sha384-G/EV+4j2dNv+tEPo3++6LCgdCROaejBqfUeNjuKAiuXbjrxilcCdDz6ZAVfHWe1Y" crossorigin="anonymous"></script>
+  <link rel="stylesheet" type="text/css" media="all"
+    href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/vendor.css">
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://kit.fontawesome.com/c48f77ca46.js" crossorigin="anonymous"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+  <!-- <i class="fa fa-linkedin"></i> -->
+
+  <!-- script
+    ================================================== -->
+  <script src="/js/modernizr.js"></script>
+</head>
+
+<body>
+
+  <div class="preloader-wrapper">
+    <div class="preloader">
+    </div>
+  </div>
+
+  <div class="search-popup">
+    <div class="search-popup-container-fluid">
+
+      <form role="search" method="get" class="search-form" action="">
+        <input type="search" id="search-form" class="search-field" placeholder="Type and press enter" value=""
+          name="s" />
+        <button type="submit" class="search-submit"><a href="#"><i class="icon icon-search"></i></a></button>
+      </form>
+
+      <h5 class="cat-list-title">Browse Categories</h5>
+
+      <ul class="cat-list">
+        <li class="cat-list-item">
+          <a href="shop.html" title="Men Jackets">Men Jackets</a>
+        </li>
+        <li class="cat-list-item">
+          <a href="shop.html" title="Fashion">Fashion</a>
+        </li>
+        <li class="cat-list-item">
+          <a href="shop.html" title="Casual Wears">Casual Wears</a>
+        </li>
+        <li class="cat-list-item">
+          <a href="shop.html" title="Women">Women</a>
+        </li>
+        <li class="cat-list-item">
+          <a href="shop.html" title="Trending">Trending</a>
+        </li>
+        <li class="cat-list-item">
+          <a href="shop.html" title="Hoodie">Hoodie</a>
+        </li>
+        <li class="cat-list-item">
+          <a href="shop.html" title="Kids">Kids</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <header id="header">
+    <div id="header-wrap">
+      <nav class="secondary-nav border-bottom">
+        <div class="container">
+          <div class="row d-flex align-items-center">
+            <div class="col-md-4 header-contact">
+              <p>Let's talk! <strong>+91 <%= about_company[0].company_mobile %></strong>
+              </p>
+            </div>
+            <div class="col-md-3 shipping-purchase text-center">
+            </div>
+            <div class="col-md-5 col-sm-12 user-items">
+              <ul class="d-flex justify-content-end list-unstyled">
+                <% if(is_login == true){ %>
+                  <li class="ms-4">
+                    <a href="/ordered_products"> Orders  
+                      <i class="fa-solid fa-truck-fast"></i>
+                    </a>
+                  </li>
+                  <li class="ms-4">
+                    <a href="/profile"> Account 
+                      <i class="fa-regular fa-address-card"></i>
+                    </a>
+                  </li>
+                  <li class="ms-4">
+                    <a href="/cart"> Cart
+                      <i class="icon icon-shopping-cart"></i>
+                    </a>
+                  </li>
+                  <li class="ms-4">
+                    <a href="/logout"> Logout 
+                      <i class="fa-solid fa-right-from-bracket"></i>
+                    </a>
+                  </li>
+                  <% } else { %>
+                    <li class="ms-3">
+                      <a href="/login"> Login
+                        <i class="icon icon-user"></i>
+                      </a>
+                    </li>
+                   <% } %>
+
+              </ul>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <nav class="primary-nav padding-small">
+        <div class="container-fluid">
+          <div class="row d-flex align-items-center">
+            <div class="col-lg-4 col-md-4">
+              <div class="main-logo">
+                <a href="/">
+                  <h2>
+                    <%= about_company[0].company_name %>
+                  </h2>
+                  <!-- <img src="/images/main-logo.png" alt="logo"> -->
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-8 col-md-8">
+              <div class="navbar">
+
+                <div id="main-nav" class="stellarnav d-flex justify-content-end right">
+                  <ul class="menu-list">
+
+                    <li class="menu-item has-sub">
+                      <a href="/" class="item-anchor active d-flex align-item-center" data-effect="Home">Home</i></a>
+                    </li>
+
+                    <li><a href="/about" class="item-anchor" data-effect="About">About</a></li>
+
+                    <li class="menu-item has-sub">
+                      <a href="/shop" class="item-anchor d-flex align-item-center" data-effect="Shop">Shop</i></a>
+
+                    </li>
+
+
+                    <li class="menu-item has-sub">
+                      <a href="/blog" class="item-anchor d-flex align-item-center" data-effect="Blog">Blog</i></a>
+                    </li>
+
+                    <li><a href="/contact" class="item-anchor" data-effect="Contact">Contact</a></li>
+
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+  </header>

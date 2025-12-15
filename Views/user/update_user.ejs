@@ -1,0 +1,115 @@
+<%- include("navbar.ejs") %>
+     <style>
+          .profile-card {
+               background: #fff;
+               padding: 25px;
+               border-radius: 8px;
+               box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+          }
+
+          .profile-img {
+               border-radius: 8px;
+               object-fit: cover;
+          }
+
+          .form-control border border-secondary {
+               background: #fafafa;
+               border: 1px solid #ddd;
+          }
+
+          .form-section-title {
+               font-size: 1.3rem;
+               font-weight: 600;
+               margin-bottom: 15px;
+               color: #444;
+          }
+     </style>
+     <div class="container my-5">
+          <!-- PAGE HEADER -->
+          <div class="text-center mb-4">
+               <h2 class="p-3 bg-light shadow-sm rounded d-inline-block">User Profile</h2>
+          </div>
+          <!-- MAIN CARD -->
+          <div class="profile-card">
+
+               <form action="/update_user" method="post" enctype="multipart/form-data">
+                    <div class="row g-4">
+                         <!-- PROFILE IMAGE -->
+                         <div class="col-md-4 text-center">
+                              <p class="mt-3 text-muted">Old Profile Picture</p>
+                              <input type="hidden" name="id" value="<%= user[0].id %>" id="">
+                              <img src="/uploads/<%= user[0].profile_image %>"
+                                   class="w-75 profile-img rounded-circle shadow-lg"
+                                   style="height: 250px; object-fit:cover">
+                              <p class="mt-3 text-muted">SELECT NEW Profile Picture</p>
+                              <input type="file" name="profile_image" accept="image/*" id="">
+
+                         </div>
+                         <!-- BASIC USER INFO -->
+                         <div class="col-md-8">
+                              <div class="form-section-title p-4">Basic Information</div>
+                              <div class="row g-4">
+                                   <div class="col-md-4">
+                                        <label class="form-label fw-semibold">User Name</label>
+                                        <input type="text" name="user_name" class="form-control border border-secondary"
+                                             value="<%= user[0].user_name %>">
+                                   </div>
+                                   <div class="col-md-4">
+                                        <label class="form-label fw-semibold">Mobile Number</label>
+                                        <input type="text" name="user_mobile"
+                                             class="form-control border border-secondary"
+                                             value="<%= user[0].user_mobile %>">
+                                   </div>
+                                   <div class="col-md-4">
+                                        <label class="form-label fw-semibold">Email</label>
+                                        <input type="text" name="user_email"
+                                             class="form-control border border-secondary"
+                                             value="<%= user[0].user_email %>">
+                                   </div>
+                                   <div class="col-md-4">
+                                        <label class="form-label fw-semibold">Gender</label>
+                                        <div class="form-check ">
+                                             <input class="form-check-input border border-secondary" type="radio"
+                                                  name="gender" value="male"  <%= user[0].gender == "male" ? "checked" :""  %> id="genderMale">
+                                             <label class="form-check-label" for="genderMale">
+                                                  Male
+                                             </label>
+                                        </div>
+                                        <div class="form-check ">
+                                             <input class="form-check-input border border-secondary" type="radio"
+                                                  name="gender" value="female" <%= user[0].gender == "female" ? "checked" :""  %> id="genderFemale">
+                                             <label class="form-check-label" for="genderFemale">
+                                                  Female
+                                             </label>
+                                        </div>
+
+
+
+                                   </div>
+                                   <div class="col-md-4">
+                                        <label class="form-label fw-semibold">Date of Birth</label>
+                                        <input type="text" name="date_of_birth"
+                                             class="form-control border border-secondary"
+                                             value="<%= user[0].date_of_birth %>">
+                                   </div>
+                              </div>
+                         </div>
+                         <!-- ADDRESS -->
+                         <div class="col-12 p-0">
+                              <div class="form-section-title">Address</div>
+                              <textarea class="form-control border border-secondary" name="address"
+                                   rows="3"><%= user[0].address %></textarea>
+                         </div>
+                         <!-- BUTTONS -->
+                         <div class="col-md-12 align-items-end text-center">
+                              <a href="/change_pass/<%= user[0].id %>">
+                                   <button class="btn btn-primary w-25 py-2 mt-5 fw-semibold">
+                                        UPDATE USER DETAILS
+                                   </button>
+                              </a>
+                         </div>
+                    </div>
+               </form>
+          </div>
+     </div>
+     <%- include("footer.ejs") %> in this that remove input tag show dtata without it

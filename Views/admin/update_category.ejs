@@ -1,0 +1,27 @@
+<%- include("navbar.ejs") %>
+     <div class="container-fluid">
+          <div class="row p-0">
+               <div class="col-12 ">
+                    <h1 class="bg-light p-4"> UPDATE CATEGORY </h1>
+               </div>
+               <div class="col-12 m-5">
+                    <div class="container">
+                         <form action="/admin/update_category" method="post">
+                              <div class="row">
+                                   <div class="col-md-2">
+                                        enter category
+                                   </div>
+                                   <div class="col-md-6">
+                                        <input type="hidden" name="id" value="<%= data[0].id %>" id="">
+                                        <input class="form-control" value="<%= data[0].category %>" type="text" name="category" id="">
+                                   </div>
+                                   <div class="col-4">
+                                        <button class="btn btn-success">UPDATE </button>
+                                   </div>
+                              </div>
+                         </form>
+                    </div>
+               </div>
+          </div>
+     </div>
+     <%- include("footer.ejs") %>

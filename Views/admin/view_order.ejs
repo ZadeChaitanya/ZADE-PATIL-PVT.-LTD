@@ -1,0 +1,131 @@
+<%- include("navbar.ejs") %>
+
+<style>
+     body {
+          background: #f5f5f5;
+     }
+
+     .status-card {
+          background: #fff;
+          padding: 25px;
+          border-radius: 12px;
+          text-align: center;
+          box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+          transition: 0.2s ease-in-out;
+          cursor: pointer;
+     }
+
+     .status-card:hover {
+          transform: translateY(-4px);
+          box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+     }
+
+     .status-title {
+          font-size: 1.2rem;
+          font-weight: 700;
+          margin-bottom: 15px;
+          color: #333;
+     }
+
+     .status-btn {
+          padding: 10px 22px;
+          font-size: 1rem;
+          font-weight: 600;
+          border-radius: 6px;
+          border: none;
+     }
+
+     .btn-pending { background: #ffb84d; color: #5f3d00; }
+     .btn-dispatched { background: #6ec6ff; color: #003e66; }
+     .btn-delivered { background: #7ee27e; color: #004d00; }
+     .btn-cancelled { background: #ff6b6b; color: #660000; }
+     .btn-returned { background: #ffe66d; color: #5f5200; }
+     .btn-rejected { background: #ffa2a2; color: #6b0000; }
+</style>
+
+<div class="container py-4">
+     <h2 class="fw-bold mb-4 text-center">Order Management Dashboard</h2>
+
+     <div class="row g-4">
+
+          <!-- Pending -->
+           <div class="col-3"></div>
+           <div class="col-md-6">
+               <a href="/admin/view_orders/all" style="width: 100%;" style="text-decoration:none;">
+                    <div class="status-card w-100" >
+                         <h3 class="status-title">All Orders</h3>
+                         <button class="btn btn-primary ">View All Orders</button>
+                    </div>
+               </a>
+           </div>
+           <div class="col-3"></div>
+          <div class="col-md-4">
+               <a href="/admin/view_orders/pending" style="text-decoration:none;">
+                    <div class="status-card">
+                         <h3 class="status-title">Pending Orders</h3>
+                         <button class="status-btn btn-pending">View Pending Orders</button>
+                    </div>
+               </a>
+          </div>
+
+          <!-- Dispatched -->
+          <div class="col-md-4">
+               <a href="/admin/view_orders/dispatched" style="text-decoration:none;">
+                    <div class="status-card">
+                         <h3 class="status-title">Dispatched Orders</h3>
+                         <button class="status-btn btn-dispatched">View Dispatched Orders</button>
+                    </div>
+               </a>
+          </div>
+
+          <!-- Delivered -->
+          <div class="col-md-4">
+               <a href="/admin/view_orders/delivered" style="text-decoration:none;">
+                    <div class="status-card">
+                         <h3 class="status-title">Delivered Orders</h3>
+                         <button class="status-btn btn-delivered">View Delivered Orders</button>
+                    </div>
+               </a>
+          </div>
+
+          <!-- Cancelled -->
+          <div class="col-md-4">
+               <a href="/admin/view_orders/cancelled" style="text-decoration:none;">
+                    <div class="status-card">
+                         <h3 class="status-title">Cancelled Orders</h3>
+                         <button class="status-btn btn-cancelled">View Cancelled Orders</button>
+                    </div>
+               </a>
+          </div>
+
+          <!-- Returned -->
+          <div class="col-md-4">
+               <a href="/admin/view_orders/returned" style="text-decoration:none;">
+                    <div class="status-card">
+                         <h3 class="status-title">Returned Orders</h3>
+                         <button class="status-btn btn-returned">View Returned Orders</button>
+                    </div>
+               </a>
+          </div>
+
+          <!-- Rejected -->
+          <div class="col-md-4">
+               <a href="/admin/view_orders/rejected" style="text-decoration:none;">
+                    <div class="status-card">
+                         <h3 class="status-title">Rejected Orders</h3>
+                         <button class="status-btn btn-rejected">View Rejected Orders</button>
+                    </div>
+               </a>
+          </div>
+
+     </div>
+</div>
+
+<%- include("footer.ejs") %>
+
+     <!-- pending 
+     dispatched 
+     delivered
+     cancelled
+     returned
+     rejected -->

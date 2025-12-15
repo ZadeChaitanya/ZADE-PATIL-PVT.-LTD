@@ -1,0 +1,35 @@
+<%- include("navbar.ejs") %>
+     <div class="container-fluid">
+          <div class="row p-0">
+               <div class="col-12 mb-5">
+                    <h1 class="bg-light p-4"> WELCOME TO PRODUCT </h1>
+               </div>
+               <div class="col-md-6">
+                    <div class="card p-4 manage-box">
+                         <div class="card-header text-center">
+                              <h1>ADD PRODUCT </h1>
+                         </div>
+                         <div class="card-footer text-center">
+                              <a href="/admin/add_product">
+                                   <button class="btn btn-primary"> ADD PRODUCTS </button>
+                              </a>
+                         </div>
+                    </div>
+               </div>
+               <div class="col-md-6">
+                    <div class="card p-4 manage-box">
+                         <div class="card-header text-center">
+                              <h1>VIEW PRODUCT </h1>
+                         </div>
+                         <div class="card-footer text-center">
+                              <a href="/admin/product_list">
+                                   <button class="btn btn-success"> VIEW PRODUCTS </button>
+                              </a> 
+                         </div>
+                    </div>
+               </div>
+          </div>
+     </div>
+     
+
+     <%- include("footer.ejs") %>

@@ -1,0 +1,58 @@
+<%- include("navbar.ejs") %>
+
+<!-- <style></style> -->
+
+
+
+<div class="container my-4">
+     
+     <h1 class="page-title">Slider Details</h1>
+
+     <div class="row g-4">
+
+          <% slider.map((val,i)=>{ %>
+
+               <div class="col-md-4">
+                    <div class="slider-card">
+
+                         <img src="/admin/images/<%= val.slider_image %>" alt="Slider Image">
+
+                         <div class="p-3">
+                              <h3><%= val.slider_heading %></h3>
+                              <p><%= val.slider_info %></p>
+                              <h5 class="mt-3">Button Text : - 
+                                   <%= val.button_text %>
+                              </h5>
+                              <h5 class="mt-3">Button URL  : - 
+                                  <a   href="<%= val.button_url %>"> <%= val.button_url %></a> 
+                              </h5>
+                         </div>
+
+                         <div class="p-3 d-flex action-box">
+                              <a  href="/admin/edit_slider/<%= val.id %>">
+                                   <button class="btn-edit">Edit</button>
+                              </a>
+
+                              <a href="/admin/delete_slider/<%= val.id %>" onclick="return confirm('Are you sure you want to delete?')" class="">
+                                   <button class="btn-delete">Delete</button>
+                              </a>
+                         </div>
+
+                    </div>
+               </div>
+
+          <% }) %>
+
+          
+     </div>
+     <div class="text-center">
+         <a href="/admin/slider">
+              <button class="btn-back"> ↢ &nbsp; Back</button>
+         </a>
+    </div>
+
+     
+
+</div>
+
+<%- include("footer.ejs") %>

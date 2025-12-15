@@ -1,0 +1,153 @@
+<%- include("navbar.ejs") %>
+
+     <style>
+          .profile-card {
+               background: #fff;
+               padding: 25px;
+               border-radius: 8px;
+               box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+          }
+
+          .profile-img {
+               border-radius: 8px;
+               object-fit: cover;
+          }
+
+          .form-control {
+               background: #fafafa;
+               border: 1px solid #ddd;
+          }
+
+          .form-section-title {
+               font-size: 1.3rem;
+               font-weight: 600;
+               margin-bottom: 15px;
+               color: #444;
+          }
+
+     </style>
+
+
+     <div class="container my-5">
+
+          <!-- PAGE HEADER -->
+          <div class="text-center mb-4">
+               <h2 class="p-3 bg-light shadow-sm rounded d-inline-block">User Profile</h2>
+          </div>
+
+          <!-- MAIN CARD -->
+          <div class="profile-card">
+
+               <div class="row g-4">
+
+                    <!-- PROFILE IMAGE -->
+                    <div class="col-md-4 text-center">
+                         <img src="/uploads/<%= user[0].profile_image %>"
+                              class="w-100 profile-img rounded-circle shadow-lg" style="height: 330px;">
+                         <p class="mt-3 text-muted">Profile Picture</p>
+                    </div>
+
+                    <!-- BASIC USER INFO -->
+                    <div class="col-md-8">
+                         <div class="form-section-title p-4">Basic Information</div>
+
+                         <div class="row g-4">
+                              <div class="col-md-4">
+                                   <label class="form-label fw-semibold">User Name</label>
+                                   <div class="p-2 border border-secondary text-dark rounded bg-light">
+                                        <%= user[0].user_name %>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-4">
+                                   <label class="form-label fw-semibold">Mobile Number</label>
+                                   <div class="p-2 border border-secondary text-dark rounded bg-light">
+                                        <%= user[0].user_mobile %>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-4">
+                                   <label class="form-label fw-semibold">Email</label>
+                                   <div class="p-2 border border-secondary text-dark rounded bg-light">
+                                        <%= user[0].user_email %>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-4">
+                                   <label class="form-label fw-semibold">Gender</label>
+                                   <div class="p-2 border border-secondary text-dark rounded bg-light">
+                                        <%= user[0].gender %>
+                                   </div>
+                              </div>
+
+                              <div class="col-md-4">
+                                   <label class="form-label fw-semibold">Date of Birth</label>
+                                   <div class="p-2 border border-secondary text-dark rounded bg-light">
+                                        <%= user[0].date_of_birth %>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+
+                    <!-- ADDRESS -->
+                    <div class="col-12">
+                         <div class="form-section-title">Address</div>
+                         <div class="p-3 border border-secondary text-dark rounded bg-light">
+                              <%= user[0].address %>
+                         </div>
+                    </div>
+
+
+                    <!-- PASSWORD -->
+                    <div class="col-md-4">
+                         <label class="form-label fw-semibold">Password</label>
+
+                         <div class="input-group">
+                              <input type="password" class="form-control border border-secondary text-dark border-end-0"
+                                   id="user_password" value="<%= user[0].password %>">
+
+                              <button style="height: 50px;" class="btn btn-outline-secondary mt-0 border-start-0"
+                                   type="button" onclick="togglePassword()">
+                                   👁
+                              </button>
+                         </div>
+                    </div>
+
+
+
+                    <!-- BUTTONS -->
+                    <div class="col-md-4 align-items-end">
+                         <a href="/change_pass/<%= user[0].id %>">
+                              <button class="btn btn-warning w-100 py-2 mt-5 fw-semibold">
+                                   Change Password
+                              </button>
+                         </a>
+                    </div>
+
+                    <div class="col-md-4  align-items-end">
+                         <a href="/update_user/<%= user[0].id %>">
+                              <button class="btn btn-success w-100 mt-5  fw-semibold">
+                                   Update Details
+                              </button>
+                         </a>
+                    </div>
+
+               </div>
+
+          </div>
+
+     </div>
+     <script>
+          function togglePassword() {
+               const pass = document.getElementById("user_password");
+
+               if (pass.type === "password") {
+                    pass.type = "text";
+               } else {
+                    pass.type = "password";
+               }
+          }
+     </script>
+
+
+     <%- include("footer.ejs") %>

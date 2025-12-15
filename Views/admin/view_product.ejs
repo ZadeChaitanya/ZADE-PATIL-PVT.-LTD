@@ -1,0 +1,71 @@
+<style>
+     .border:hover {
+  transform: scale(1.02);
+  transition: .2s;
+  color:violet
+}
+
+</style>
+<%- include("navbar.ejs") %>
+
+<div class="container my-4">
+  <div class="row">
+    <div class="col-12 mb-4">
+      <h2 class="p-4 bg-light rounded shadow-sm text-center">Product List</h2>
+    </div>
+  </div>
+
+  <div class="row g-4">
+
+    <% product.map((val, i) => { %>
+      <div class="col-md-4 col-lg-3 rounded-3">
+        <div class="border rounded shadow-sm bg-white h-100 d-flex flex-column rounded-3">
+
+          <!-- Product Image -->
+          <div class="rounded-top-3" style="height:180px; overflow:hidden;  border-bottom:1px solid #eee;">
+            <img 
+              src="/uploads/<%= val.product_image1 %>" 
+              class="img-fluid w-100 " 
+              style="object-fit:cover; height:100%;" 
+              alt="product image"
+            >
+          </div>
+
+          <!-- Product Content -->
+          <div class="p-3 flex-grow-1">
+            <h5 class="fw-bold mb-1 text-dark"><%= val.product_name %></h5>
+            <p class="text-muted mb-1">Company » </p>
+            <p class="fw-semibold mb-2"><%= val.product_company %></p>
+
+            <p class="text-muted mb-1">Color »</p>
+            <p class="mb-2 fw-semibold"><%= val.product_color %></p>
+
+            <p class="text-muted mb-1">Price Range »</p>
+            <p class="text-success fw-bold mb-0">
+              ₹ <%= val.price %> 
+              <span class="text-danger text-decoration-line-through ms-1">
+                ₹ <%= val.duplicate_price %>
+              </span>
+            </p>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="p-3 border-top d-flex justify-content-between">
+            <a href="/admin/edit_info/<%= val.id %>" class="btn btn-sm btn-primary w-100 me-1">Edit</a>
+            <a href="/admin/product_info/<%= val.id %>" class="btn btn-sm btn-dark w-100 me-1">View</a>
+            <a href="/admin/delete_info/<%= val.id %>" class="btn btn-sm btn-danger w-100">Delete</a>
+          </div>
+
+        </div>
+      </div>
+    <% }) %>
+
+  </div>
+
+  <div class="text-center mt-5">
+    <a href="/admin/shop" class="btn btn-secondary px-5 py-2"> ↢ &nbsp; Back</a>
+  </div>
+
+</div>
+
+<%- include("footer.ejs") %>

@@ -1,0 +1,115 @@
+<%- include("navbar.ejs") %>
+
+     <div class="container my-5">
+
+          <div class="row mb-4">
+               <div class="col-12">
+                    <h2 class="p-4  bg-light rounded shadow-sm">
+                         <%= product[0].product_name %> : Product Detail 
+                              <a href="/admin/edit_info/<%= product[0].id %>"
+                                   class="btn btn-lg btn-primary pb-1 float-end"> Edit </a>
+
+                    </h2>
+               </div>
+          </div>
+
+          <div class="row g-4">
+
+               <div class="col-md-3">
+                    <div class="p-3 border rounded bg-white shadow-sm">
+                         <h6 class="text-muted mb-1 ">Product Name</h6>
+                         <p class="fs-5 fw-bold text-dark">
+                              <%= product[0].product_name %>
+                         </p>
+                    </div>
+               </div>
+
+               <div class="col-md-3">
+                    <div class="p-3 border rounded bg-white shadow-sm">
+                         <h6 class="text-muted mb-1">Product Company</h6>
+                         <p class="fs-5">
+                              <%= product[0].product_company %>
+                         </p>
+                    </div>
+               </div>
+
+               <div class="col-md-3">
+                    <div class="p-3 border rounded bg-white shadow-sm">
+                         <h6 class="text-muted mb-1">Product Label</h6>
+                         <p class="fs-5">
+                              <%= product[0].product_label %>
+                         </p>
+                    </div>
+               </div>
+
+               <div class="col-md-3">
+                    <div class="p-3 border  rounded  shadow-sm " ;">
+                         <h6 class="text-muted mb-1">Product Color</h6>
+                         <p class="fs-5 ">
+
+                              <%= product[0].product_color %>
+                                   <span style="color: <%= product[0].product_color %>;"> <i class="fa fa-circle"></i>
+                                   </span>
+                         </p>
+                    </div>
+               </div>
+               <div class="col-12 mt-5">
+                    <h4 class="fw-bold mb-3">Available Sizes and Prices</h4>
+               </div>
+
+               <% product_prissing.map((val, i)=> { %>
+                    <div class="col-md-4 col-lg-3">
+                         <div class="p-3 border rounded shadow-sm bg-white h-100">
+
+                              <div class="d-flex justify-content-between mb-2">
+                                   <h6 class="text-muted mb-0">Size</h6>
+                                   <span class="fw-bold">
+                                        <%= val.product_size %>
+                                   </span>
+                              </div>
+
+                              <div class="d-flex justify-content-between">
+                                   <h6 class="text-muted mb-0">Selling Price</h6>
+                                   <span class="text-success fw-bold">₹ <%= val.product_price %></span>
+                              </div>
+
+                              <div class="d-flex justify-content-between mt-2">
+                                   <h6 class="text-muted mb-0">Original Price</h6>
+                                   <span class="text-danger fw-semibold text-decoration-line-through">
+                                        ₹ <%= val.product_duplicate_price %>
+                                   </span>
+                              </div>
+
+                         </div>
+                    </div>
+                    <% }) %>
+
+
+                         <div class="col-12 mt-5">
+                              <h4 class="fw-bold mb-3">Product Images</h4>
+                         </div>
+
+                         <% const images=[ product[0].product_image1, product[0].product_image2,
+                              product[0].product_image3, product[0].product_image4 ]; %>
+
+                              <% images.forEach(img=> { %>
+                                   <div class="col-md-3">
+                                        <div class="border rounded overflow-hidden shadow-sm">
+                                             <img src="/uploads/<%= img %>" class="img-fluid"
+                                                  style="height: 220px; width: 100%; object-fit: cover;"
+                                                  alt="product image">
+                                        </div>
+                                   </div>
+                                   <% }) %>
+
+          </div>
+
+          <div class="text-center mt-5">
+               <a href="/admin/product_list" class="btn btn-dark px-5 py-2">
+                    ↢ &nbsp; Back to Product List
+               </a>
+          </div>
+
+     </div>
+
+     <%- include("footer.ejs") %>

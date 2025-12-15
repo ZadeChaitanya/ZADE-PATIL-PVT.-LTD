@@ -1,0 +1,55 @@
+<%-include("navbar.ejs")%>
+     <div class="container-fluid">
+          <div class="row p-0">
+               <div class="col-12">
+                    <h1 class="bg-light p-4">WELCOME TO CATEGORY </h1>
+               </div>
+               <div class="col-12 p-3">
+                    <p class="d-inline-flex gap-1">
+                         <button class="btn btn-info" type="button" data-bs-toggle="collapse"
+                              data-bs-target="#add" aria-expanded="false" aria-controls="add">
+                              ADD CATEGORY
+                         </button>
+                    </p>
+                    <div class="collapse" id="add">
+                         <div class="card card-body">
+                              <div class="container">
+                                   <form action="/admin/category" method="post" >
+                                        <div class="row">
+                                             <div class="col-md-2">
+                                                  enter category
+                                             </div>
+                                             <div class="col-md-6">
+                                                  <input class="form-control " type="text" name="category" id="">
+                                             </div>
+                                             <div class="col-4">
+                                                  <button class="btn btn-success">SAVE</button>
+                                             </div>
+                                        </div>
+                                   </form>
+                              </div>
+                         </div>
+                    </div>
+               </div>
+          </div>
+          <div class="row">
+               <% data.map((val,i)=>{ %>
+                    <div class="col-4 p-2"  >
+                         <div class="p-4 bg-dark rounded-3">
+
+                              <h3 class="text-light"> # <%= i+1 %></h3>
+                              <h1 class="text-center text-light"><%= val.category %></h1>
+                              <a class="mt-2" href="/admin/edit_category/<%= val.id %>" > <button class="  btn btn-warning"> EDIT </button></a>
+                              <a class="mt-2 float-end" href="/admin/delete_category/<%= val.id %>" > <button class="  btn btn-danger "> DELETE </button></a>
+                              
+                         </div>
+                    </div>
+               <% }) %>
+          </div>
+     </div>
+     <%-include("footer.ejs")%>
+<!-- 
+CREATE TABLE category (
+     id INT PRIMARY KEY AUTO_INCREMENT,
+     category VARCHAR(100)
+); -->

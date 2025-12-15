@@ -1,0 +1,610 @@
+<%- include("navbar.ejs") %>
+
+<style>
+    :root {
+        --color-primary: #4361ee;
+        --color-success: #06d6a0;
+        --color-warning: #ffd166;
+        --color-danger: #ef476f;
+        --color-dark: #2b2d42;
+        --color-light: #f8f9fa;
+        --color-gray-200: #e9ecef;
+        --border-radius: 16px;
+        --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        --box-shadow-hover: 0 15px 40px rgba(67, 97, 238, 0.12);
+    }
+
+    body {
+        background: #f5f7fd;
+        color: #495057;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    .container-fluid {
+        max-width: 1920px;
+        padding: 1.5rem;
+    }
+
+    /* ===== Page Header ===== */
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .page-title h1 {
+        font-weight: 800;
+        color: var(--color-dark);
+        margin-bottom: 0.25rem;
+        font-size: 1.9rem;
+    }
+
+    .page-title p {
+        color: #6c757d;
+        margin-bottom: 0;
+    }
+
+    .header-actions .btn {
+        border-radius: 12px;
+        font-weight: 600;
+        padding: 0.6rem 1.5rem;
+        box-shadow: var(--box-shadow);
+        transition: all 0.3s ease;
+    }
+
+    /* ===== KPI Summary Cards ===== */
+    .kpi-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .kpi-card {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 1.75rem;
+        box-shadow: var(--box-shadow);
+        border: none;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .kpi-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--box-shadow-hover);
+    }
+
+    .kpi-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 6px;
+        height: 100%;
+    }
+
+    .kpi-card.primary::before { background: var(--color-primary); }
+    .kpi-card.success::before { background: var(--color-success); }
+    .kpi-card.warning::before { background: var(--color-warning); }
+    .kpi-card.danger::before { background: var(--color-danger); }
+
+    .kpi-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.25rem;
+        font-size: 1.5rem;
+    }
+
+    .kpi-primary .kpi-icon { background: rgba(67, 97, 238, 0.12); color: var(--color-primary); }
+    .kpi-success .kpi-icon { background: rgba(6, 214, 160, 0.12); color: var(--color-success); }
+    .kpi-warning .kpi-icon { background: rgba(255, 209, 102, 0.12); color: var(--color-warning); }
+    .kpi-danger .kpi-icon { background: rgba(239, 71, 111, 0.12); color: var(--color-danger); }
+
+    .kpi-content h3 {
+        font-size: 0.95rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        color: #6c757d;
+        margin-bottom: 0.5rem;
+    }
+
+    .kpi-value {
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: var(--color-dark);
+        line-height: 1;
+        margin-bottom: 0.5rem;
+    }
+
+    .kpi-trend {
+        display: inline-flex;
+        align-items: center;
+        font-size: 0.875rem;
+        font-weight: 600;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        margin-top: 0.5rem;
+    }
+
+    .trend-up { color: var(--color-success); background: rgba(6, 214, 160, 0.12); }
+    .trend-down { color: var(--color-danger); background: rgba(239, 71, 111, 0.12); }
+
+    /* ===== Main Content Grid ===== */
+    .content-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 1200px) {
+        .content-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== Chart & Table Cards ===== */
+    .content-card {
+        background: white;
+        border-radius: var(--border-radius);
+        padding: 1.75rem;
+        box-shadow: var(--box-shadow);
+        height: 100%;
+        border: none;
+    }
+
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .card-header h5 {
+        font-weight: 700;
+        color: var(--color-dark);
+        margin-bottom: 0;
+    }
+
+    .chart-container {
+        position: relative;
+        height: 320px;
+        width: 100%;
+    }
+
+    /* ===== Recent Orders Table ===== */
+    .table-container {
+        overflow-x: auto;
+        border-radius: 12px;
+        border: 1px solid var(--color-gray-200);
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .table thead th {
+        background-color: #f9fafc;
+        border-bottom: 2px solid var(--color-gray-200);
+        font-weight: 700;
+        color: var(--color-dark);
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.5px;
+        padding: 1rem 1.25rem;
+    }
+
+    .table tbody td {
+        padding: 1rem 1.25rem;
+        vertical-align: middle;
+        border-color: var(--color-gray-200);
+    }
+
+    .table tbody tr {
+        transition: background-color 0.2s ease;
+    }
+
+    .table tbody tr:hover {
+        background-color: rgba(67, 97, 238, 0.03);
+    }
+
+    .status-badge {
+        padding: 0.35rem 0.9rem;
+        border-radius: 30px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.3px;
+    }
+
+    .badge-delivered { background: rgba(6, 214, 160, 0.15); color: var(--color-success); }
+    .badge-pending { background: rgba(255, 209, 102, 0.15); color: #e6a700; }
+    .badge-cancelled { background: rgba(239, 71, 111, 0.15); color: var(--color-danger); }
+    .badge-processing { background: rgba(67, 97, 238, 0.15); color: var(--color-primary); }
+
+    /* ===== Secondary Insights Grid ===== */
+    .insights-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-top: 1.5rem;
+    }
+
+    .mini-chart-container {
+        height: 220px;
+        position: relative;
+    }
+</style>
+
+<div class="container-fluid">
+    <!-- PAGE HEADER WITH QUICK ACTIONS -->
+    <header class="page-header">
+        <div class="page-title">
+            <h1>ZADE PATIL PVT. LTD. Store`s Overview Dashboard</h1>
+            <p>Welcome back! Here’s what’s happening with your store today.  
+               <span id="currentDateTime" class="text-muted"></span></p>
+        </div>
+        <div class="header-actions">
+            <a href="/admin/add_product" class="btn btn-primary me-2">
+                <i class="fas fa-plus-circle me-2"></i>Add Product
+            </a>
+            <a href="/admin/view_orders/pending" class="btn btn-outline-primary">
+                <i class="fas fa-shipping-fast me-2"></i>Manage Orders
+            </a>
+        </div>
+    </header>
+
+    <!-- KPI SUMMARY CARDS -->
+    <section class="kpi-grid">
+        <div class="kpi-card kpi-primary">
+            <div class="d-flex align-items-start justify-content-between">
+                <div class="kpi-content">
+                    <h3>Total Revenue</h3>
+                    <div class="kpi-value">₹ <span id="totalRevenue"> <%= total_revenue || 0 %> </span></div>
+                    <span class="kpi-trend trend-up">
+                        <i class="fas fa-arrow-up me-1"></i> 12.5% from last month
+                    </span>
+                </div>
+                <div class="kpi-icon">
+                    <i class="fas fa-rupee-sign"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="kpi-card kpi-success">
+            <div class="d-flex align-items-start justify-content-between">
+                <div class="kpi-content">
+                    <h3>Total Orders</h3>
+                    <div class="kpi-value"><%= total_orders %></div>
+                    <div class="text-muted small mt-1">
+                        <span class="fw-semibold"><%= pending_orders %></span> pending · 
+                        <span class="fw-semibold"><%= delivered_orders || 0 %></span> delivered
+                    </div>
+                </div>
+                <div class="kpi-icon">
+                    <i class="fas fa-shopping-bag"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="kpi-card kpi-warning">
+            <div class="d-flex align-items-start justify-content-between">
+                <div class="kpi-content">
+                    <h3>Active Products</h3>
+                    <div class="kpi-value"><%= total_products %></div>
+                    <div class="text-muted small mt-1">
+                        <span class="fw-semibold">100</span> low in stock
+                    </div>
+                </div>
+                <div class="kpi-icon">
+                    <i class="fas fa-box-open"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="kpi-card kpi-danger">
+            <div class="d-flex align-items-start justify-content-between">
+                <div class="kpi-content">
+                    <h3>Registered Users</h3>
+                    <div class="kpi-value"><%= total_users %></div>
+                    <span class="kpi-trend trend-up">
+                        <i class="fas fa-arrow-up me-1"></i> 5.2% new this month
+                    </span>
+                </div>
+                <div class="kpi-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT: CHART & RECENT ORDERS -->
+    <div class="content-grid">
+        <!-- SALES CHART CARD -->
+        <div class="content-card">
+            <div class="card-header">
+                <h5>Revenue Performance</h5>
+                <div class="btn-group" role="group">
+                    <button type="button" class="btn btn-outline-secondary btn-sm period-btn active" data-period="month">This Month</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm period-btn" data-period="quarter">Quarter</button>
+                    <button type="button" class="btn btn-outline-secondary btn-sm period-btn" data-period="year">Year</button>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="salesChart"></canvas>
+            </div>
+        </div>
+
+        <!-- RECENT ORDERS CARD -->
+        <div class="content-card">
+            <div class="card-header">
+                <h5>Recent Orders</h5>
+                <select class="form-select form-select-sm w-auto" id="orderStatusFilter">
+                    <option value="all">All Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="processing">Processing</option>
+                    <option value="delivered">Delivered</option>
+                </select>
+            </div>
+            <div class="table-container">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% recent_orders.slice(0, 6).forEach((order) => { %>
+                        <% 
+                            let statusClass;
+                            switch(order.order_status?.toLowerCase()) {
+                                case 'delivered': statusClass = 'badge-delivered'; break;
+                                case 'pending': statusClass = 'badge-pending'; break;
+                                case 'cancelled': statusClass = 'badge-cancelled'; break;
+                                case 'processing': statusClass = 'badge-processing'; break;
+                                default: statusClass = 'badge-secondary';
+                            }
+                        %>
+                        <tr class="order-row" data-status="<%= order.order_status?.toLowerCase() %>" data-id="<%= order.order_id %>">
+                            <td class="fw-semibold">#<%= order.order_id %></td>
+                            <td><%= order.customer_name %></td>
+                            <td class="fw-semibold">₹<%= order.total_amount %></td>
+                            <td><span class="status-badge <%= statusClass %>"><%= order.order_status %></span></td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-end mt-3">
+                <a href="/admin/view_orders" class="btn btn-link btn-sm text-decoration-none">View all orders <i class="fas fa-arrow-right ms-1"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECONDARY INSIGHTS: PRODUCTS & CUSTOMERS -->
+    <div class="insights-grid">
+        <div class="content-card">
+            <div class="card-header">
+                <h5>Top Performing Products</h5>
+            </div>
+            <div class="mini-chart-container">
+                <canvas id="productsChart"></canvas>
+            </div>
+        </div>
+        <div class="content-card">
+            <div class="card-header">
+                <h5>Customer Segments</h5>
+            </div>
+            <div class="mini-chart-container">
+                <canvas id="customersChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- JavaScript Libraries -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/luxon"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-luxon"></script>
+
+<script>
+     // Example in your route handler (e.g., app.get('/admin/dashboard', ...))
+     //   res.render('admin/dashboard', {
+    // ... your existing data
+    //total_orders,
+    //total_users,
+    //total_products,
+    //pending_orders,
+    //recent_orders,
+
+    // NEW DATA REQUIRED:
+    let total_revenue= 125430 // Sum of all completed/paid orders
+    let delivered_orders= 89 // Count of orders with status 'delivered'
+    let low_stock_count= 7 // Count of products with stock below threshold
+    let monthly_sales_data=[12000, 45000, 38000, 52000, 30000, 60000, 75000, 48000, 52000, 61000, 58000, 72000] // Revenue for each month
+//});
+    // 1. Initialize Main Sales Chart
+    const salesCtx = document.getElementById('salesChart').getContext('2d');
+    const monthlySales = JSON.stringify(monthly_sales_data || Array(12).fill(0));
+    const monthLabels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+    const salesChart = new Chart(salesCtx, {
+        type: 'line',
+        data: {
+            labels: monthLabels.slice(0, monthlySales.length),
+            datasets: [{
+                label: 'Revenue (₹)',
+                data: monthlySales,
+                borderColor: 'rgba(67, 97, 238, 1)',
+                backgroundColor: 'rgba(67, 97, 238, 0.08)',
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+                pointBackgroundColor: 'white',
+                pointBorderColor: 'rgba(67, 97, 238, 1)',
+                pointBorderWidth: 2,
+                pointRadius: 5,
+                pointHoverRadius: 8
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                    backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                    padding: 12,
+                    callbacks: {
+                        label: function(context) {
+                            return `Revenue: ₹${context.parsed.y.toLocaleString()}`;
+                        }
+                    }
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    grid: { color: 'rgba(0, 0, 0, 0.05)' },
+                    ticks: {
+                        callback: function(value) {
+                            return '₹' + value.toLocaleString();
+                        }
+                    }
+                },
+                x: {
+                    grid: { display: false }
+                }
+            },
+            interaction: {
+                intersect: false,
+                mode: 'nearest'
+            }
+        }
+    });
+
+    // 2. Period Filter for Main Chart
+    document.querySelectorAll('.period-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            
+            // Example: You would fetch new data for the selected period here
+            console.log('Fetching data for period:', this.dataset.period);
+            // Simulated data change
+            const newData = this.dataset.period === 'year' 
+                ? monthlySales 
+                : monthlySales.slice(0, this.dataset.period === 'quarter' ? 4 : 2);
+            salesChart.data.datasets[0].data = newData;
+            salesChart.update();
+        });
+    });
+
+    // 3. Initialize Mini Charts
+    // Product Performance Chart
+    const productsCtx = document.getElementById('productsChart').getContext('2d');
+    new Chart(productsCtx, {
+        type: 'bar',
+        data: {
+            labels: ['Winter Jacket', 'Running Shoes', 'Bluetooth Headphones', 'Yoga Mat', 'Smart Watch'],
+            datasets: [{
+                label: 'Units Sold',
+                data: [145, 210, 89, 156, 198],
+                backgroundColor: 'rgba(67, 97, 238, 0.7)',
+                borderRadius: 8,
+                borderSkipped: false,
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                y: { beginAtZero: true, grid: { display: false } },
+                x: { grid: { display: false } }
+            }
+        }
+    });
+
+    // Customer Segments Chart
+    const customersCtx = document.getElementById('customersChart').getContext('2d');
+    new Chart(customersCtx, {
+        type: 'doughnut',
+        data: {
+            labels: ['New Customers', 'Returning Customers', 'Inactive'],
+            datasets: [{
+                data: [45, 35, 20],
+                backgroundColor: [
+                    'rgba(67, 97, 238, 0.9)',
+                    'rgba(6, 214, 160, 0.9)',
+                    'rgba(255, 209, 102, 0.9)'
+                ],
+                borderWidth: 0,
+                hoverOffset: 15
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '70%',
+            plugins: {
+                legend: { position: 'bottom' },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return `${context.label}: ${context.parsed}%`;
+                        }
+                    }
+                }
+            }
+        }
+    });
+
+    // 4. Order Table Filter
+    document.getElementById('orderStatusFilter').addEventListener('change', function() {
+        const status = this.value;
+        document.querySelectorAll('.order-row').forEach(row => {
+            row.style.display = (status === 'all' || row.dataset.status === status) ? '' : 'none';
+        });
+    });
+
+    // 5. Set Current Date & Time
+    function updateDateTime() {
+        const now = new Date();
+        const options = { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        };
+        document.getElementById('currentDateTime').textContent = now.toLocaleDateString('en-IN', options);
+    }
+    updateDateTime();
+    setInterval(updateDateTime, 60000); // Update every minute
+
+    // 6. Make Table Rows Clickable
+    document.querySelectorAll('.order-row').forEach(row => {
+        row.style.cursor = 'pointer';
+        row.addEventListener('click', function() {
+            window.location.href = `/admin/view_order_detail/${this.dataset.id}`;
+        });
+    });
+</script>
+
+<%- include("footer.ejs") %>

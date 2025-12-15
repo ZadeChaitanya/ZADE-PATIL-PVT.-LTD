@@ -1,0 +1,50 @@
+<%- include("navbar.ejs") %>
+<div class="container">
+     <div class="row">
+          <div class="col-12">
+               <h2>CRAETE NEW ACCOUNT </h2>
+               <p>enter details </p>
+          </div>
+          <div class="col-3"></div>
+          <div class="col-6">
+               <form action="/create_account" method="post">
+                    <div class="row">
+                         <div class="col-12">
+                              Enter User Name 
+                              <input class="form-control" type="text" name="user_name" id="">
+                         </div>
+                         <div class="col-12">
+                              Enter User Mobile 
+                              <input class="form-control" type="number" name="user_mobile" id="">
+                         </div>
+                         <div class="col-12">
+                              Enter User email 
+                              <input class="form-control" type="email" name="user_email" id="">
+                         </div>
+                         <div class="col-12">
+                              Enter User Password 
+                              <input class="form-control" type="password" name="password" id="">
+                         </div>
+                         <div class="col-12 text-center" >
+                              <button class="btn btn-warning"> CREATE ACCOUNT </button> <br>
+
+                              <a href="/login"> Have a Account ?  <b> Sign In </b></a>
+                         </div>
+                    </div>
+               </form>
+          </div>
+          <div class="col-3"></div>
+     </div>
+</div>
+<%- include("footer.ejs") %>
+
+
+<!-- 
+CREATE TABLE USER (
+     id INT PRIMARY KEY AUTO_INCREMENT,
+     user_name VARCHAR(100),
+     user_mobile VARCHAR(15),
+     user_email VARCHAR(100),
+     password TEXT
+);
+-->

@@ -1,0 +1,216 @@
+<%-include("navbar.ejs") %>
+
+     <div class="container-fluid">
+          <div class="row p-0">
+               <div class="col-12">
+                    <h1 class="bg-light p-4"> UPDATE PRODUCTS </h1>
+               </div>
+          </div>
+          <form action="/admin/update_product" method="post" enctype="multipart/form-data">
+               <div class="row">
+                    <div class="col-md-8">
+                         <input type="hidden" name="id" value="<%= product[0].id %>" id="">
+
+                         <div class="row">
+                              <div class="col-md-6 mt-4 p-3 ">
+                                   Choose Product Category <b class="text-danger"> * </b>
+                                   <select name="product_category" id=""
+                                        class="form-control border border-secondary-subtle" required>
+                                        <option value="" class="text-center">Choose ↴ </option>
+                                        <% category.map((val,i)=>{ %>
+                                             <option <%=product[0].product_category==val.id ? 'selected' : '' %> value="<%= val.id %>" >
+                                                       <%= val.category %>
+                                             </option>
+                                             <% }) %>
+                                   </select>
+                              </div>
+                              <div class="col-md-6 mt-4 p-3 ">
+                                   Choose Product Name <b class="text-danger"> * </b>
+                                   <input type="text" value="<%= product[0].product_name %>" name="product_name" id=""
+                                        class="form-control border border-secondary-subtle shadow-sm" required>
+                              </div>
+                              <div class="col-md-6 mt-4">
+                                   Choose Product Brand / Company <b class="text-danger"> * </b>
+                                   <input type="text" value="<%= product[0].product_company %>" name="product_company"
+                                        id="" class="form-control border border-secondary-subtle shadow-sm" list="data"
+                                        required>
+                              </div>
+                              <datalist id="data">
+                                   <option value="Nike"></option>
+                                   <option value="Adidas"></option>
+                                   <option value="Puma"></option>
+                                   <option value="Spike"></option>
+                              </datalist>
+                              <div class="col-md-6 mt-4 ">
+                                   Choose Product Color <b class="text-danger"> * </b>
+                                   <input type="text" value="<%= product[0].product_color %>" name="product_color" id=""
+                                        class="form-control border border-secondary-subtle shadow-sm" required>
+                              </div>
+                              <div class="col-md-6 mt-4">
+                                   Choose Product Lebel <b class="text-danger"> * </b>
+                                   <select name="product_label"
+                                        class="form-control border border-secondary-subtle shadow-sm" id="" required>
+                                        <option value="" class="text-center"> Choose ↴ </option>
+                                        <option <%=product[0].product_label=='feacherd' ? 'selected' : '' %>
+                                             value="feacherd">Featured</option>
+                                        <option <%=product[0].product_label=='best_selling' ? 'selected' : '' %>
+                                             value="best_selling">Best Selling</option>
+                                        <option <%=product[0].product_label=='flash_sales' ? 'selected' : '' %>
+                                             value="flash_sales">Flash Sales</option>
+                                   </select>
+                              </div>
+                              <div class="col-12">
+                                   <div class="row">
+                                        <div class="col-md-6 mt-4 bg-dark p-3 text-light">
+                                             <p> OLD IMAGE 1 </p>
+
+                                             <div style="height:180px; overflow:hidden; border-bottom:1px solid #eee;">
+                                                  <img src="/uploads/<%= product[0].product_image1 %>"
+                                                       class="img-fluid w-100" style="object-fit:cover; height:100%;"
+                                                       alt="product image">
+                                             </div>
+                                             Choose NEW Product Image 1 
+                                             <input type="file" accept="image/*" name="product_image1" id=""
+                                                  class="form-control border border-secondary-subtle shadow-sm"
+                                                  >
+                                        </div>
+                                        <div class="col-md-6 mt-4 bg-dark p-3 text-light">
+                                             <p> OLD IMAGE 2 </p>
+
+                                             <div style="height:180px; overflow:hidden; border-bottom:1px solid #eee;">
+                                                  <img src="/uploads/<%= product[0].product_image2 %>"
+                                                       class="img-fluid w-100 " style="object-fit:cover; height:100%;"
+                                                       alt="product image1">
+                                             </div>
+                                             Choose Product Image 2 
+                                             <input type="file" accept="image/*" name="product_image2" id=""
+                                                  class="form-control border border-secondary-subtle shadow-sm"
+                                                  >
+                                        </div>
+                                        <div class="col-md-6 mt-4 bg-dark p-3 text-light">
+                                             <p> OLD IMAGE 3 </p>
+
+                                             <div style="height:180px; overflow:hidden; border-bottom:1px solid #eee;">
+                                                  <img src="/uploads/<%= product[0].product_image3 %>"
+                                                       class="img-fluid w-100 " style="object-fit:cover; height:100%;"
+                                                       alt="product image3">
+                                             </div>
+                                             Choose Product Image 3
+                                             <input type="file" accept="image/*" name="product_image3" id=""
+                                                  class="form-control border border-secondary-subtle shadow-sm">
+                                        </div>
+                                        <div class="col-md-6 mt-4 bg-dark p-3 text-light">
+                                             <p> OLD IMAGE 4 </p>
+
+                                             <div style="height:180px; overflow:hidden; border-bottom:1px solid #eee;">
+                                                  <img src="/uploads/<%= product[0].product_image4 %>"
+                                                       class="img-fluid w-100 " style="object-fit:cover; height:100%;"
+                                                       alt="product image4">
+                                             </div>
+                                             Choose Product Image 4
+                                             <input type="file" accept="image/*" name="product_image4" id=""
+                                                  class="form-control border border-secondary-subtle shadow-sm">
+                                        </div>
+                                   </div>
+                              </div>
+
+                         </div>
+                    </div>
+                    <div class="col-md-4 mt-5">
+                         <div class="row">
+                              <input type="hidden" name="pr_id" value="<%=product_prissing[0].id%>" id="">
+                              <% sizes=['XS','S','M','L','XL','XXL'] %>
+                                   <table class="table table-bordered table-danger">
+                                        <thead>
+                                             <tr>
+                                                  <th>Product SIZE </th>
+                                                  <th>Product Prices</th>
+                                                  <th>Product Duplicate Price </th>
+                                             </tr>
+                                        </thead>
+                                        <tbody>
+                                             <% product_prissing.map((val,i)=>{ %>
+                                                  <tr>
+                                                       <td><input readonly type="text"
+                                                                 class="form-control border border-secondary-subtle text-center"
+                                                                 name="product_size" value="<%= val.product_size%>" id=""></td>
+                                                       <td><input type="text"
+                                                                 class="form-control border border-secondary-subtle shadow-sm"
+                                                                 name="product_price" value="<%= val.product_price%>" id=""></td>
+                                                       <td><input type="text"
+                                                                 class="form-control border border-secondary-subtle shadow-sm"
+                                                                 name="product_duplicate_price" value="<%= val.product_duplicate_price%>" id=""></td>
+                                                  </tr>
+                                                  <%  }) %>
+                                        </tbody>
+                                   </table>
+                         </div>
+
+                    </div>
+               </div>
+               <div class="col-12 ">
+                    Enter Product Details <b class="text-danger"> * </b>
+                    <textarea name="product_details" id="" class="form-control border border-secondary-subtle shadow-sm"
+                         required>  <%= product[0].product_details %> </textarea>
+               </div>
+
+               <div class="div text-center mt-4">
+                    <button class="btn btn-success"> UPDATE PRODUCT </button>
+               </div>
+          </form>
+          <div class="text-center">
+               <a href="/admin/product_list">
+                    <button class="btn-back"> <b>↢</b> &nbsp; Back</button>
+               </a>
+          </div>
+
+     </div>
+
+     <%-include("footer.ejs") %>
+
+
+
+
+          <!-- 
+Proudct  
+     Product Category
+     Product Name 
+     Product Company 
+     Product Color
+     Product Label (Featured , Best selling  ,Flash sales)
+     Product Image 1
+     Product Image 2
+     Product Image 3
+     Product Image 4
+     Product Details
+
+     CRAETE TABLE product (
+          id INT PRIMARY KEY AUTO_INCREMENT,
+          product_category INT,
+          product_name VARCHAR(100),
+          product_company VARCHAR(100),
+          product_color VARCHAR(100),
+          product_label VARCHAR(50),
+          product_details TEXT,
+          product_image1 TEXT,
+          product_image2 TEXT,
+          product_image3 TEXT,
+          product_image4 TEXT
+     );
+
+
+
+
+     CREATE TABLE product_prissing(
+          id INT PRIMARY KEY AUTO_INCREMENT,
+          product_id INT,
+          product_size VARCHAR(50),
+          product_price INT,
+          product_duplicate_price INT
+     );
+     Product Size
+     Product Price 
+     Product Duplicate Price 
+
+
+  -->
