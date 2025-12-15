@@ -188,7 +188,7 @@ route.post('/update_slider', verify_admin, async function (req, res) {
 })
 route.get('/category', verify_admin, async function (req, res) {
   var data = await exe('SELECT * FROM category')
-  res.render('admin/Category.ejs', { data })
+  res.render('admin/category.ejs', { data })
 })
 route.post('/category', verify_admin, async function (req, res) {
   var data = await exe(
