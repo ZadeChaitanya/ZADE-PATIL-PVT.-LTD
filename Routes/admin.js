@@ -268,7 +268,7 @@ route.post('/add_product', verify_admin, async function (req, res) {
 route.get('/product_list', verify_admin, async function (req, res) {
   // SELECT * FROM product;
   var sql = `SELECT * ,
-  (SELECT MIN(product_price) FROM product_prissing WHERE product_prissing.product_id = product.id) AS price,
+  (SELECT MIN(product_price) FROM product_prissing WHERE product_prissing.product_price > 0 AND product_prissing.product_id = product.id) AS price,
   (SELECT MAX(product_duplicate_price) FROM product_prissing WHERE product_prissing.product_id = product.id) AS duplicate_price
   FROM product
   `
