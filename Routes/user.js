@@ -8,7 +8,7 @@ const { Script } = require('vm')
 
 route.get('/', async function (req, res) {
   var about_company = await exe('SELECT * FROM company_details')
-  var slider = await exe('SELECT * FROM SLIDER')
+  var slider = await exe('SELECT * FROM slider')
   var obj = {
     about_company: about_company,
     slider: slider,
