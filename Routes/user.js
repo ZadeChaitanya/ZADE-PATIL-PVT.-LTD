@@ -5,7 +5,7 @@ let url = require('url')
 const e = require('express')
 const { Script } = require('vm')
 
-console.log(process.env.DB_USER, process.env.DB_PASSWORD, process.env.DB_NAME)
+
 route.get('/', async function (req, res) {
   var about_company = await exe('SELECT * FROM company_details')
   var slider = await exe('SELECT * FROM SLIDER')
