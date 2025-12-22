@@ -34,9 +34,10 @@
                                    </p>
 
                                    <p class="text-muted mt-2">
-                                        <i class="fa-solid fa-location-dot me-2"></i>
-                                        <%= user.address.substring(0, 40) %>...
-                                   </p>
+  <i class="fa-solid fa-location-dot me-2"></i>
+  <%= user.address ? user.address.substring(0, 40) + '...' : 'Address not available' %>
+</p>
+
 
                                    <hr>
 
